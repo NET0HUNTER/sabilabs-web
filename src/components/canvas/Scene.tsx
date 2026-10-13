@@ -34,7 +34,7 @@ export default function Scene() {
           <Environment preset="city" />
         </Suspense>
 
-        <EffectComposer disableNormalPass>
+        <EffectComposer>
           <Bloom 
             intensity={1.2} 
             luminanceThreshold={0.8} 
