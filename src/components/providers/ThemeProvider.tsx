@@ -1,8 +1,11 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useSyncExternalStore } from 'react';
 
-type Theme = 'gold' | 'blue' | 'emerald';
+export type Theme = 'blue' | 'gold' | 'green';
+
+export const themes: Theme[] = ['blue', 'gold', 'green'];
+export const THEME_STORAGE_KEY = 'sabilabs-theme';
 
 interface ThemeContextType {
   theme: Theme;
@@ -10,14 +13,33 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+const themeListeners = new Set<() => void>();
+let currentTheme: Theme = 'blue';
+
+function subscribeToTheme(listener: () => void) {
+  themeListeners.add(listener);
+  return () => themeListeners.delete(listener);
+}
+
+function getThemeSnapshot(): Theme {
+  const documentTheme = document.documentElement.getAttribute('data-theme');
+  if (themes.includes(documentTheme as Theme)) currentTheme = documentTheme as Theme;
+  return currentTheme;
+}
+
+function getServerThemeSnapshot(): Theme {
+  return 'blue';
+}
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('gold');
+  const theme = useSyncExternalStore(subscribeToTheme, getThemeSnapshot, getServerThemeSnapshot);
 
-  useEffect(() => {
-    // Update the data-theme attribute on the root element
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
+  const setTheme = useCallback((nextTheme: Theme) => {
+    currentTheme = nextTheme;
+    document.documentElement.setAttribute('data-theme', nextTheme);
+    window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+    themeListeners.forEach((listener) => listener());
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

@@ -95,15 +95,15 @@ export default function PainPointsSection() {
   }, { scope: sectionRef });
 
   return (
-    <section id="pain-points" ref={sectionRef} className="py-32 px-6 md:px-24">
-      <div className="max-w-7xl mx-auto">
+    <section id="pain-points" ref={sectionRef} className="section-shell">
+      <div className="site-container">
         <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mb-16 text-center">
           Sound Familiar?
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {painPoints.map((point, i) => (
-            <div key={i} className="reveal-item glass-card rounded-2xl p-6 hover:glass-card-hover transition-all duration-300 group">
+            <div key={i} className="reveal-item sabi-card group transition-all duration-300 hover:-translate-y-1 hover:border-white/25">
               <div className="w-12 h-12 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xl mb-6 group-hover:border-[var(--accent-start)] transition-colors">
                 {point.icon}
               </div>
@@ -118,7 +118,7 @@ export default function PainPointsSection() {
         </div>
 
         <p className="text-xl text-slate-300 font-light text-center max-w-3xl mx-auto mt-16 reveal-item">
-          If even one of these sounds familiar, you don't have a technology problem. You have a business operations problem. That's exactly what we solve.
+          If even one of these sounds familiar, you don&apos;t have a technology problem. You have a business operations problem. That&apos;s exactly what we solve.
         </p>
       </div>
     </section>

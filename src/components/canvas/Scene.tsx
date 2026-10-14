@@ -1,20 +1,16 @@
 'use client';
 
-import { Canvas } from '@react-three/fiber';
-import { Environment, Float, OrbitControls } from '@react-three/drei';
+import { Canvas, useThree } from '@react-three/fiber';
+import { Environment, Float } from '@react-three/drei';
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense } from 'react';
+import { brandColors, themeAccentColors } from '@/lib/brandColors';
+import { useTheme } from '@/components/providers/ThemeProvider';
 import GlassSphere from './GlassSphere';
 
 // Dynamic import of Scene prevents SSR issues since WebGL relies on browser window
 export default function Scene() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
+  const { theme } = useTheme();
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0">
@@ -23,20 +19,22 @@ export default function Scene() {
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
         className="w-full h-full"
       >
-        <ambientLight intensity={0.4} />
-        <directionalLight position={[10, 10, 5]} intensity={2} color="#ffffff" />
-        <directionalLight position={[-10, -10, -5]} intensity={1} color="var(--accent-start)" />
+        <ambientLight intensity={0.36} />
+        <directionalLight position={[10, 10, 5]} intensity={1.7} color={brandColors.white} />
+        <directionalLight
+          position={[-10, -10, -5]}
+          intensity={0.8}
+          color={themeAccentColors[theme]}
+        />
         
         <Suspense fallback={null}>
-          <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
-            <GlassSphere />
-          </Float>
+          <ResponsiveSphere />
           <Environment preset="city" />
         </Suspense>
 
         <EffectComposer>
           <Bloom 
-            intensity={1.2} 
+            intensity={1}
             luminanceThreshold={0.8} 
             luminanceSmoothing={0.9} 
             mipmapBlur 
@@ -48,5 +46,23 @@ export default function Scene() {
         {/* <OrbitControls enableZoom={false} enablePan={false} /> */}
       </Canvas>
     </div>
+  );
+}
+
+function ResponsiveSphere() {
+  const { size } = useThree();
+  const mobile = size.width < 640;
+  const tablet = size.width < 1024;
+  const position: [number, number, number] = mobile
+    ? [0, -1.25, -0.7]
+    : tablet
+      ? [0, -1.25, -0.75]
+      : [0, -1.3, -0.8];
+  const scale = mobile ? 0.64 : tablet ? 0.72 : 0.8;
+
+  return (
+    <Float position={position} scale={scale} speed={1.5} rotationIntensity={0.35} floatIntensity={0.55}>
+      <GlassSphere />
+    </Float>
   );
 }

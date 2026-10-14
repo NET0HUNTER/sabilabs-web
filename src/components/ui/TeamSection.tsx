@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SectionIntro } from './Primitives';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -92,23 +93,18 @@ export default function TeamSection() {
   }, { scope: sectionRef });
 
   return (
-    <section id="about" ref={sectionRef} className="py-32 px-6 md:px-24 bg-[var(--bg-dark)] pointer-events-auto z-10 relative">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-16 reveal-item">
-          <span className="text-[var(--accent-start)] text-sm tracking-widest uppercase font-bold block mb-4">
-            Our Team
-          </span>
-          <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mb-6">
-            Business Expertise Meets Engineering Excellence
-          </h2>
-          <p className="text-slate-300 font-light leading-relaxed text-lg max-w-3xl">
-            We're not just developers. Our multidisciplinary team combines business analysis, financial expertise, cybersecurity, and engineering — so your technology decisions are informed by more than just code.
-          </p>
-        </div>
+    <section id="about" ref={sectionRef} className="section-shell pointer-events-auto">
+      <div className="site-container">
+        <SectionIntro
+          className="reveal-item"
+          eyebrow="Our Team"
+          heading="Business Expertise Meets Engineering Excellence"
+          description={<>We&apos;re not just developers. Our multidisciplinary team combines business analysis, financial expertise, cybersecurity, and engineering — so your technology decisions are informed by more than just code.</>}
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {teamRoles.map((member) => (
-            <div key={member.id} className="glass-card rounded-xl p-6 reveal-item flex items-start gap-5">
+            <div key={member.id} className="sabi-card reveal-item flex items-start gap-5">
               <div className="text-[var(--accent-start)] mt-1 shrink-0">
                 {member.icon}
               </div>

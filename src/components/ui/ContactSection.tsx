@@ -1,323 +1,117 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useState } from 'react';
+import { Button, Eyebrow, SectionContainer, SectionIntro } from './Primitives';
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
+type FormData = { name: string; company: string; email: string; phone: string; interest: string; message: string; website: string };
+const initialData: FormData = { name: '', company: '', email: '', phone: '', interest: '', message: '', website: '' };
 
 export default function ContactSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [formData, setFormData] = useState({
-    fullName: '',
-    organization: '',
-    email: '',
-    phone: '',
-    service: 'Software Engineering',
-    description: '',
-    website: '', // honeypot
-  });
+  const [formData, setFormData] = useState(initialData);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'sent'>('idle');
 
-  useGSAP(
-    () => {
-      if (!sectionRef.current) return;
-      gsap.from('.contact-reveal', {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        },
-      });
-    },
-    { scope: sectionRef }
-  );
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFormData((data) => ({ ...data, [name]: value }));
+    if (errors[name]) setErrors((current) => ({ ...current, [name]: '' }));
+  };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    // Clear error on change
-    if (errors[e.target.name]) {
-      setErrors((prev) => ({ ...prev, [e.target.name]: '' }));
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (formData.website) return;
+    const nextErrors: Record<string, string> = {};
+    if (formData.name.trim().length < 2) nextErrors.name = 'Please enter your name.';
+    if (formData.company.trim().length < 2) nextErrors.company = 'Please enter your organisation.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) nextErrors.email = 'Please enter a valid email.';
+    if (!formData.interest) nextErrors.interest = 'Please select an area of interest.';
+    if (formData.message.trim().length < 10) nextErrors.message = 'Please share a little more about the project.';
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length) return;
+
+    setStatus('submitting');
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify({ access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY || 'YOUR_ACCESS_KEY_HERE', subject: `New enquiry from ${formData.name} — ${formData.company}`, from_name: 'SabiLabs Website', ...formData }) });
+      const result = await response.json();
+      if (!result.success) throw new Error('Submission failed');
+      setStatus('sent');
+      setFormData(initialData);
+    } catch {
+      setErrors({ submit: 'We could not send this enquiry. Please email us directly.' });
+      setStatus('idle');
     }
   };
 
-  const validate = () => {
-    const newErrors: Record<string, string> = {};
-    if (!formData.fullName || formData.fullName.length < 2) {
-      newErrors.fullName = 'Please enter a valid full name.';
-    }
-    if (!formData.organization || formData.organization.length < 2) {
-      newErrors.organization = 'Please enter a valid organization name.';
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email || !emailRegex.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address.';
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (formData.website) {
-      // Honeypot triggered, silently exit
-      return;
-    }
-    
-    if (validate()) {
-      setIsSubmitting(true);
-      
-      fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json'
-        },
-        body: JSON.stringify({
-          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY || 'YOUR_ACCESS_KEY_HERE',
-          subject: `New Inquiry from ${formData.fullName} - ${formData.organization}`,
-          from_name: 'SabiLabs Website Form',
-          name: formData.fullName,
-          email: formData.email,
-          organization: formData.organization,
-          phone: formData.phone,
-          service: formData.service,
-          message: formData.description,
-        })
-      })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.success) {
-          setIsSubmitted(true);
-        } else {
-          setErrors({ submit: 'Something went wrong. Please try again or email us directly.' });
-        }
-      })
-      .catch(() => {
-        setErrors({ submit: 'Network error. Please email us directly.' });
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
-    }
-  };
+  const fieldClass = 'glass-input min-h-12 w-full rounded-xl border border-white/10 bg-white/[0.035] px-4 py-3 text-[15px] text-white placeholder:text-slate-600';
 
   return (
-    <section id="contact" className="bg-[var(--bg-dark)] py-32 px-6 md:px-24" ref={sectionRef}>
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16 contact-reveal">
-          <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white mb-6">
-            Let's Start With a Conversation
-          </h2>
-          <p className="text-slate-400 font-light leading-relaxed max-w-3xl mx-auto">
-            No sales pitch. No pressure. Just a focused discussion about your business challenges and whether we're the right partner to solve them.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-12 items-start">
-          {/* Left Column: Form */}
-          <div className="glass-card rounded-2xl p-8 md:p-10 contact-reveal relative overflow-hidden">
-            {isSubmitted ? (
-              <div className="flex flex-col items-center justify-center text-center py-16 h-full">
-                <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mb-6">
-                  <svg className="w-8 h-8 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-black uppercase tracking-tighter text-white mb-4">
-                  Thank you for reaching out.
-                </h3>
-                <p className="text-slate-400 font-light leading-relaxed">
-                  We'll review your inquiry and get back to you within one business day.
-                </p>
-              </div>
+    <section id="contact" className="section-shell border-t border-white/5">
+      <SectionContainer>
+        <SectionIntro
+          eyebrow="Let's Talk"
+          heading="Start With a Conversation."
+          description={<>No sales pitch. Just a focused discussion about your business challenge and whether we&apos;re the right partner to solve it.</>}
+        />
+        <div className="grid gap-16 lg:grid-cols-[minmax(0,1.25fr)_minmax(320px,.75fr)] lg:gap-24">
+          <div>
+            {status === 'sent' ? (
+              <div className="sabi-card flex min-h-[420px] flex-col justify-center"><Eyebrow>Enquiry Received</Eyebrow><h3 className="mb-4 text-3xl font-bold text-white">Thank you for reaching out.</h3><p className="max-w-xl text-[var(--text-muted)]">We&apos;ll review your enquiry and get back to you within one business day.</p></div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Honeypot */}
-                <input
-                  type="text"
-                  name="website"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  value={formData.website}
-                  onChange={handleChange}
-                  className="hidden absolute -left-[9999px]"
-                  aria-hidden="true"
-                />
-
-                <div className="space-y-1">
-                  <label className="text-sm font-semibold text-slate-300 block">
-                    Full Name <span className="text-[var(--accent-start)]">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg glass-input text-sm text-white placeholder:text-slate-500 bg-white/5 border border-white/10 focus:border-[var(--accent-start)] focus:outline-none transition-colors"
-                    placeholder="Jane Doe"
-                  />
-                  {errors.fullName && <span className="text-red-400 text-xs">{errors.fullName}</span>}
-                </div>
-
-                <div className="space-y-1">
-                  <label className="text-sm font-semibold text-slate-300 block">
-                    Organization <span className="text-[var(--accent-start)]">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="organization"
-                    value={formData.organization}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg glass-input text-sm text-white placeholder:text-slate-500 bg-white/5 border border-white/10 focus:border-[var(--accent-start)] focus:outline-none transition-colors"
-                    placeholder="Acme Corp"
-                  />
-                  {errors.organization && <span className="text-red-400 text-xs">{errors.organization}</span>}
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-1">
-                    <label className="text-sm font-semibold text-slate-300 block">
-                      Email <span className="text-[var(--accent-start)]">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg glass-input text-sm text-white placeholder:text-slate-500 bg-white/5 border border-white/10 focus:border-[var(--accent-start)] focus:outline-none transition-colors"
-                      placeholder="jane@example.com"
-                    />
-                    {errors.email && <span className="text-red-400 text-xs">{errors.email}</span>}
-                  </div>
-                  <div className="space-y-1">
-                    <label className="text-sm font-semibold text-slate-300 block">
-                      Phone (Optional)
-                    </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg glass-input text-sm text-white placeholder:text-slate-500 bg-white/5 border border-white/10 focus:border-[var(--accent-start)] focus:outline-none transition-colors"
-                      placeholder="+254..."
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-1">
-                  <label className="text-sm font-semibold text-slate-300 block">
-                    Service Interest
-                  </label>
+              <form onSubmit={handleSubmit} noValidate className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <input name="website" value={formData.website} onChange={handleChange} tabIndex={-1} autoComplete="off" className="visually-hidden-honeypot" aria-hidden="true" />
+                <Field label="Name" name="name" value={formData.name} onChange={handleChange} error={errors.name} className={fieldClass} required />
+                <Field label="Company / Organisation" name="company" value={formData.company} onChange={handleChange} error={errors.company} className={fieldClass} required />
+                <Field label="Email" name="email" value={formData.email} onChange={handleChange} error={errors.email} className={fieldClass} type="email" required />
+                <Field label="Phone" name="phone" value={formData.phone} onChange={handleChange} className={fieldClass} type="tel" optional />
+                <label className="grid gap-2 sm:col-span-2">
+                  <span className="text-xs font-bold uppercase tracking-[0.12em] text-slate-300">Area of Interest</span>
                   <select
-                    name="service"
-                    value={formData.service}
+                    name="interest"
+                    value={formData.interest}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg glass-input text-sm text-white bg-slate-900 border border-white/10 focus:border-[var(--accent-start)] focus:outline-none transition-colors"
+                    className={`${fieldClass} theme-select`}
+                    aria-invalid={Boolean(errors.interest)}
+                    aria-describedby={errors.interest ? 'interest-error' : undefined}
+                    required
                   >
+                    <option value="" disabled>Select an area of interest</option>
                     <option value="Software Engineering">Software Engineering</option>
                     <option value="Business Automation">Business Automation</option>
                     <option value="Cloud Solutions">Cloud Solutions</option>
-                    <option value="Cybersecurity & Compliance">Cybersecurity & Compliance</option>
+                    <option value="Cybersecurity &amp; Compliance">Cybersecurity &amp; Compliance</option>
                     <option value="Not Sure Yet">Not Sure Yet</option>
                   </select>
-                </div>
-
-                <div className="space-y-1">
-                  <label className="text-sm font-semibold text-slate-300 block">
-                    Brief Description (Optional)
-                  </label>
-                  <textarea
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    rows={4}
-                    className="w-full px-4 py-3 rounded-lg glass-input text-sm text-white placeholder:text-slate-500 bg-white/5 border border-white/10 focus:border-[var(--accent-start)] focus:outline-none transition-colors resize-none"
-                    placeholder="How can we help?"
-                  ></textarea>
-                </div>
-
-                {errors.submit && (
-                  <div className="text-red-400 text-sm font-semibold text-center mt-2 bg-red-400/10 py-2 rounded-lg border border-red-400/20">
-                    {errors.submit}
-                  </div>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-4 px-6 rounded-full font-bold uppercase tracking-widest text-sm text-white bg-gradient-to-r from-[var(--accent-start)] to-[var(--accent-end)] hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed mt-4 flex justify-center items-center"
-                >
-                  {isSubmitting ? (
-                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                  ) : (
-                    'Request a Discovery Session'
-                  )}
-                </button>
+                  {errors.interest ? <span id="interest-error" className="text-xs text-rose-300">{errors.interest}</span> : null}
+                </label>
+                <label className="grid gap-2 sm:col-span-2"><span className="text-xs font-bold uppercase tracking-[0.12em] text-slate-300">Project Details / Message</span><textarea name="message" value={formData.message} onChange={handleChange} rows={5} className={`${fieldClass} resize-y`} placeholder="Tell us about the challenge, your goals, and any important timing." />{errors.message ? <span className="text-xs text-rose-300">{errors.message}</span> : null}</label>
+                {errors.submit ? <p className="text-sm text-rose-300 sm:col-span-2">{errors.submit}</p> : null}
+                <div className="sm:col-span-2"><Button type="submit" disabled={status === 'submitting'}>{status === 'submitting' ? 'Sending…' : 'Send Enquiry'}<span aria-hidden="true">→</span></Button></div>
               </form>
             )}
           </div>
 
-          {/* Right Column: Contact Info & CTAs */}
-          <div className="contact-reveal flex flex-col justify-center h-full">
-            <div className="mb-12">
-              <h3 className="text-[var(--accent-start)] text-xs uppercase tracking-widest font-bold mb-8">
-                Direct Contact
-              </h3>
-              
-              <div className="space-y-6">
-                <div>
-                  <div className="text-slate-500 text-xs uppercase tracking-widest font-bold mb-1">Email</div>
-                  <a href="mailto:contact@sabilabs.co.ke" className="text-xl font-light text-white hover:text-[var(--accent-start)] transition-colors">
-                    contact@sabilabs.co.ke
-                  </a>
-                </div>
-                
-                <div>
-                  <div className="text-slate-500 text-xs uppercase tracking-widest font-bold mb-1">Phone</div>
-                  <div className="text-xl font-light text-white">
-                    +254 700 000 000
-                  </div>
-                </div>
-
-                <div>
-                  <div className="text-slate-500 text-xs uppercase tracking-widest font-bold mb-1">Location</div>
-                  <div className="text-xl font-light text-white">
-                    Nairobi, Kenya
-                  </div>
-                </div>
-              </div>
+          <aside className="border-t border-white/10 pt-10 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-1">
+            <Eyebrow>Direct Contact</Eyebrow>
+            <div className="mt-10 grid gap-10">
+              <ContactDetail label="Email"><a href="mailto:contact@sabilabs.co.ke" className="break-all hover:text-[var(--accent-start)]">contact@sabilabs.co.ke</a></ContactDetail>
+              <ContactDetail label="Phone"><a href="tel:+254700000000" className="hover:text-[var(--accent-start)]">+254 700 000 000</a></ContactDetail>
+              <ContactDetail label="Location">Nairobi, Kenya</ContactDetail>
             </div>
-
-            <div className="space-y-4">
-              <button className="w-full sm:w-auto py-3 px-8 rounded-full font-bold uppercase tracking-widest text-sm text-white border border-white/20 hover:bg-white/5 transition-colors">
-                Schedule a Demo
-              </button>
-              <div>
-                <a href="#assessment" className="inline-flex items-center text-[var(--accent-start)] font-bold text-sm tracking-widest uppercase hover:opacity-80 transition-opacity mt-4 group">
-                  Get a Security Assessment
-                  <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </a>
-              </div>
+            <div className="mt-12 flex flex-col items-start gap-5">
+              <a href="mailto:contact@sabilabs.co.ke?subject=Schedule%20a%20SabiLabs%20Demo" className="button button-secondary">Schedule a Demo</a>
+              <a href="mailto:contact@sabilabs.co.ke?subject=Security%20Assessment" className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent-start)] transition-colors hover:text-white">Get a Security Assessment →</a>
             </div>
-          </div>
+          </aside>
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
+}
+
+function Field({ label, error, optional, className, ...props }: React.InputHTMLAttributes<HTMLInputElement> & { label: string; error?: string; optional?: boolean }) {
+  return <label className="grid gap-2"><span className="text-xs font-bold uppercase tracking-[0.12em] text-slate-300">{label}{optional ? <span className="ml-2 font-medium normal-case tracking-normal text-slate-500">optional</span> : null}</span><input {...props} className={className} />{error ? <span className="text-xs text-rose-300">{error}</span> : null}</label>;
+}
+
+function ContactDetail({ label, children }: { label: string; children: React.ReactNode }) {
+  return <div><p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent-start)]">{label}</p><div className="text-xl font-medium leading-7 text-white transition-colors">{children}</div></div>;
 }

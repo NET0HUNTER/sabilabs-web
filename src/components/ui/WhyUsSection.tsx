@@ -1,115 +1,54 @@
 'use client';
 
 import { useRef } from 'react';
+import Link from 'next/link';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Card, Eyebrow, SectionContainer, SectionHeading } from './Primitives';
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
+if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
 const differentiators = [
-  {
-    id: 1,
-    title: 'Strategy Before Software',
-    description: 'We invest time understanding your business before proposing a single technology decision.',
-  },
-  {
-    id: 2,
-    title: 'Security by Design',
-    description: 'Every system we build has security woven into its architecture — not bolted on as an afterthought.',
-  },
-  {
-    id: 3,
-    title: 'Business-First Thinking',
-    description: 'We measure success by your operational outcomes, not lines of code delivered.',
-  },
-  {
-    id: 4,
-    title: 'Scalable Infrastructure',
-    description: 'We build systems designed to handle your growth seamlessly, ensuring you don\'t need a costly rebuild in two years.',
-  },
-  {
-    id: 5,
-    title: 'Transparent Communication',
-    description: 'No black boxes. Regular progress updates, demos, and honest conversations about trade-offs.',
-  },
-  {
-    id: 6,
-    title: 'Vendor-Neutral Recommendations',
-    description: 'We recommend the right technology for your problem — not the technology we\'re most comfortable with.',
-  },
-  {
-    id: 7,
-    title: 'Long-Term Partnerships',
-    description: 'We don\'t disappear after deployment. We stay, optimize, and grow with your business.',
-  },
+  ['Strategy Before Software', 'We invest time understanding your business before proposing a single technology decision.'],
+  ['Security by Design', 'Every system we build has security woven into its architecture — not bolted on as an afterthought.'],
+  ['Business-First Thinking', 'We measure success by your operational outcomes, not lines of code delivered.'],
+  ['Scalable Infrastructure', "We build systems designed to handle your growth seamlessly, ensuring you don't need a costly rebuild in two years."],
+  ['Transparent Communication', 'No black boxes. Regular progress updates, demos, and honest conversations about trade-offs.'],
+  ['Vendor-Neutral Recommendations', "We recommend the right technology for your problem — not the technology we're most comfortable with."],
+  ['Long-Term Partnerships', "We don't disappear after deployment. We stay, optimize, and grow with your business."],
 ];
 
 export default function WhyUsSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
+  const sectionRef = useRef<HTMLElement>(null);
   useGSAP(() => {
-    if (!sectionRef.current) return;
-    
-    const elements = gsap.utils.toArray('.reveal-item') as HTMLElement[];
-    elements.forEach((el, i) => {
-      gsap.from(el, {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        delay: i * 0.1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        },
-      });
-    });
+    gsap.utils.toArray<HTMLElement>('.principle-card').forEach((el) => gsap.from(el, { y: 24, opacity: 0, duration: .65, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } }));
   }, { scope: sectionRef });
 
   return (
-    <section id="why-us" ref={sectionRef} className="py-32 px-6 md:px-24 bg-[var(--bg-dark)] pointer-events-auto z-10 relative">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mb-4">
-            Not the Right Fit for Everyone.
-          </h2>
-          <p className="text-slate-400 tracking-widest uppercase text-sm font-bold">
-            And That's the Point.
-          </p>
+    <section id="why-us" ref={sectionRef} className="section-shell">
+      <SectionContainer>
+        <div className="section-intro centered">
+          <Eyebrow>Why SabiLabs</Eyebrow>
+          <SectionHeading>Not the Right Fit for Everyone.</SectionHeading>
+          <p className="mt-4 text-sm font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">And that&apos;s the point.</p>
         </div>
 
-        <div className="glass-card rounded-2xl p-8 md:p-12 mb-16 max-w-4xl mx-auto reveal-item">
-          <p className="italic text-lg text-slate-300 leading-relaxed mb-6">
-            "If you're looking for someone to simply build exactly what you ask for — without questioning whether it's the right solution — we're probably not the right partner."
-          </p>
-          <p className="italic text-lg text-slate-300 leading-relaxed mb-8">
-            "If you're looking for a technology partner who will challenge your assumptions, understand your business deeply, and build solutions that create long-term value — let's talk."
-          </p>
-          <a href="#contact" className="text-[var(--accent-start)] font-bold tracking-widest uppercase text-sm hover:text-white transition-colors">
-            Start the Conversation &rarr;
-          </a>
-        </div>
+        <Card className="mx-auto mb-12 max-w-4xl border-l-2 border-l-[var(--accent-start)] md:p-10">
+          <p className="text-lg leading-8 text-slate-200">If you&apos;re looking for a technology partner who will challenge your assumptions, understand your business deeply, and build solutions that create long-term value — let&apos;s talk.</p>
+          <Link href="/contact" className="mt-6 inline-flex text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent-start)]">Start the conversation →</Link>
+        </Card>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {differentiators.map((diff, index) => (
-            <div key={diff.id} className="glass-card rounded-xl p-8 reveal-item flex flex-col gap-4">
-              <span className="text-[var(--accent-start)] text-2xl font-black">
-                0{index + 1}
-              </span>
-              <h3 className="text-xl font-bold text-white uppercase tracking-tighter">
-                {diff.title}
-              </h3>
-              <p className="text-slate-300 font-light leading-relaxed">
-                {diff.description}
-              </p>
-            </div>
+        <div className="grid grid-cols-1 gap-7 md:grid-cols-2">
+          {differentiators.map(([title, description], index) => (
+            <Card key={title} className={`principle-card flex min-h-[250px] flex-col ${index === 6 ? 'md:col-start-1 md:translate-x-[calc(50%+14px)]' : ''}`}>
+              <span className="mb-8 text-sm font-bold tracking-[0.14em] text-[var(--accent-start)]">{String(index + 1).padStart(2, '0')}</span>
+              <h3 className="mb-3 text-2xl font-bold tracking-[-0.03em] text-white">{title}</h3>
+              <p className="mt-auto text-[16px] leading-7 text-[var(--text-muted)]">{description}</p>
+            </Card>
           ))}
         </div>
-      </div>
+      </SectionContainer>
     </section>
   );
 }

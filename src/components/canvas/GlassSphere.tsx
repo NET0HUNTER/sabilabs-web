@@ -4,17 +4,14 @@ import { Sphere, MeshTransmissionMaterial } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 import * as THREE from 'three';
+import { themeAccentColors } from '@/lib/brandColors';
 import { useTheme } from '../providers/ThemeProvider';
 
 export default function GlassSphere() {
   const meshRef = useRef<THREE.Mesh>(null);
   const { theme } = useTheme();
 
-  // Determine the core color based on the current theme
-  let coreColor = '#ffffff';
-  if (theme === 'gold') coreColor = '#e8d08d';
-  if (theme === 'blue') coreColor = '#00b4d8';
-  if (theme === 'emerald') coreColor = '#2ecc71';
+  const coreColor = themeAccentColors[theme];
 
   useFrame((state, delta) => {
     if (meshRef.current) {
@@ -46,7 +43,7 @@ export default function GlassSphere() {
         temporalDistortion={0.1}
         color={coreColor}
         emissive={coreColor}
-        emissiveIntensity={0.2}
+        emissiveIntensity={0.14}
       />
     </Sphere>
   );

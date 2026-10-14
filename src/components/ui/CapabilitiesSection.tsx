@@ -30,8 +30,8 @@ export default function CapabilitiesSection() {
   const [activeCap, setActiveCap] = useState(capabilities[0].id);
 
   return (
-    <section id="capabilities" className="relative min-h-screen bg-[var(--bg-dark)] py-32 px-6 md:px-24 flex flex-col justify-center pointer-events-auto z-10">
-      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+    <section id="capabilities" className="section-shell pointer-events-auto">
+      <div className="site-container grid grid-cols-1 items-center gap-16 md:grid-cols-2">
         
         {/* Left: Interactive Accordion */}
         <div className="flex flex-col gap-6">

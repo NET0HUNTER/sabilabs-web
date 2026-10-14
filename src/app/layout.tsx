@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import Navbar from "@/components/ui/Navbar";
+import FooterSection from "@/components/ui/FooterSection";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -10,6 +12,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.sabilabs.co.ke"),
   title: "SABILABS | Strategy-Led Technology Consulting | East Africa",
   description:
     "SABILABS is a strategy-led technology and cybersecurity consulting firm in Nairobi, Kenya. We solve business problems through custom software engineering, business automation, cloud solutions, and cybersecurity — built on a structured Business Analysis Framework.",
@@ -75,6 +78,14 @@ export const metadata: Metadata = {
     canonical: "https://sabilabs.co.ke",
   },
   category: "Technology",
+  icons: {
+    icon: [
+      { url: "/favicon-16.svg", sizes: "16x16", type: "image/svg+xml" },
+      { url: "/favicon-32.svg", sizes: "32x32", type: "image/svg+xml" },
+      { url: "/favicon-48.svg", sizes: "48x48", type: "image/svg+xml" },
+    ],
+    apple: [{ url: "/apple-touch-icon.svg", sizes: "180x180", type: "image/svg+xml" }],
+  },
 };
 
 export default function RootLayout({
@@ -259,8 +270,13 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme="blue" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("sabilabs-theme");if(t==="blue"||t==="gold"||t==="green")document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -283,7 +299,9 @@ export default function RootLayout({
       <body className={`${inter.variable} font-sans antialiased`}>
         <ThemeProvider>
           <SmoothScrollProvider>
+            <Navbar />
             {children}
+            <FooterSection />
           </SmoothScrollProvider>
         </ThemeProvider>
       </body>
