@@ -1,50 +1,81 @@
+import Image from 'next/image';
 import Link from 'next/link';
+import FooterSphere from '@/components/canvas/FooterSphere';
 import { SectionContainer } from './Primitives';
 
 const footerLinks = [
   ['Home', '/'],
-  ['Services', '/services'],
-  ['How We Work', '/methodology'],
-  ['Projects', '/projects'],
-  ['Products', '/products'],
   ['About', '/about'],
+  ['Capabilities', '/capabilities'],
+  ['Industries', '/industries'],
+  ['Case Studies', '/case-studies'],
   ['Contact', '/contact'],
 ] as const;
 
 export default function FooterSection() {
   return (
-    <footer className="relative overflow-hidden border-t border-[var(--border)] bg-[var(--bg-secondary)] py-10 text-white transition-colors duration-300 md:py-12">
-      <SectionContainer className="relative z-10">
-        <div className="pb-8 md:pb-10">
-          <p className="eyebrow">Start a Project</p>
-          <h2 className="max-w-4xl text-[clamp(2rem,4vw,3.25rem)] font-extrabold leading-[1.06] tracking-[-0.045em] text-white">Have a business problem worth solving?</h2>
-          <a href="mailto:contact@sabilabs.co.ke" className="mt-5 inline-block max-w-full break-words text-[clamp(1.4rem,3.2vw,3rem)] font-semibold leading-tight tracking-[-0.035em] text-[var(--accent-start)] transition-colors hover:text-white [overflow-wrap:anywhere]">contact@sabilabs.co.ke</a>
-        </div>
-
-        <div className="grid gap-8 border-t border-[var(--border)] py-7 md:grid-cols-2 md:items-start md:gap-9 lg:grid-cols-[0.8fr_1.2fr_auto]">
-          <div>
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-[var(--accent-start)]">Nairobi, Kenya</p>
-            <p className="text-base leading-7 text-[var(--text-muted)]">+254 700 000 000<br />East Africa &amp; Beyond</p>
+    <footer className="site-footer relative z-20 isolate overflow-hidden border-t border-[var(--border)] bg-[var(--bg-secondary)] text-white transition-colors duration-300">
+      <FooterSphere />
+      <SectionContainer className="relative z-10 py-14 md:py-16 lg:py-[clamp(4.5rem,6vw,6rem)]">
+        <div className="grid items-start gap-x-[clamp(3rem,5vw,5rem)] gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+          <div className="md:col-span-2 lg:col-span-1">
+            <Link
+              href="/"
+              aria-label="SabiLabs home"
+              className="inline-flex"
+            >
+              <Image
+                src="/images/logo-transparent.png"
+                alt="SabiLabs - Deep Expertise. Secure Execution."
+                width={825}
+                height={163}
+                className="h-auto w-[min(68vw,270px)]"
+                style={{ filter: 'drop-shadow(0 0 0.9px rgba(255,255,255,0.75)) drop-shadow(0 5px 14px rgba(0,0,0,0.18))' }}
+              />
+            </Link>
+            <p className="mt-6 max-w-sm text-lg font-semibold leading-7 text-slate-200">
+              Understanding Businesses.<br />Engineering Solutions.
+            </p>
+            <a
+              href="mailto:info@sabilabs.co.ke"
+              className="mt-5 inline-block max-w-full text-base font-semibold text-[var(--accent-start)] transition-colors hover:text-white [overflow-wrap:anywhere]"
+            >
+              info@sabilabs.co.ke
+            </a>
           </div>
 
-          <nav className="grid grid-cols-2 gap-x-7 gap-y-4 sm:grid-cols-3" aria-label="Footer navigation">
-            {footerLinks.map(([label, href]) => <Link key={href} href={href} className="text-sm font-semibold text-[var(--text-muted)] transition-colors hover:text-[var(--accent-start)]">{label}</Link>)}
+          <nav aria-label="Footer navigation">
+            <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--accent-start)]">Navigation</p>
+            <div className="grid gap-3">
+              {footerLinks.map(([label, href]) => (
+                <Link key={href} href={href} className="w-fit text-sm font-semibold text-[var(--text-muted)] transition-colors hover:text-white">
+                  {label}
+                </Link>
+              ))}
+            </div>
           </nav>
 
-          <Link href="/contact" className="button button-secondary w-fit md:col-span-2 lg:col-span-1">Book a Consultation <span aria-hidden="true">→</span></Link>
+          <address className="not-italic">
+            <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--accent-start)]">Contact</p>
+            <div className="grid gap-5 text-sm leading-6 text-[var(--text-muted)]">
+              <p>Nairobi, Kenya<br />East Africa &amp; Beyond</p>
+              <p>
+                <a href="tel:+254757041695" className="block transition-colors hover:text-white">+254 757 041 695</a>
+                <a href="tel:+254792322034" className="block transition-colors hover:text-white">+254 792 322 034</a>
+              </p>
+              <p>P.O. Box 79170 &ndash; 00400<br />Nairobi, Kenya</p>
+            </div>
+          </address>
         </div>
 
-        <div className="flex flex-col gap-5 py-6 sm:flex-row sm:items-end sm:justify-between md:py-8">
-          <Link href="/" aria-label="SabiLabs home" className="block whitespace-nowrap text-[clamp(3.25rem,7.5vw,7rem)] font-extrabold leading-[0.78] tracking-[-0.075em] text-white">Sabi<span className="text-[var(--accent-start)]">Labs</span></Link>
-          <p className="max-w-xs text-base leading-7 text-[var(--text-muted)] sm:text-right">Understanding Businesses.<br />Engineering Solutions.</p>
-        </div>
-
-        <div className="flex flex-col gap-4 text-[13px] font-semibold uppercase tracking-[0.1em] text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-          <span>© 2026 SabiLabs</span>
-          <div className="flex gap-6"><Link href="/privacy" className="hover:text-white">Privacy Policy</Link><Link href="/terms" className="hover:text-white">Terms</Link></div>
+        <div className="mt-10 flex flex-col gap-4 border-t border-[var(--border)] pt-8 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+          <p>&copy; 2026 SabiLabs</p>
+          <div className="flex gap-6">
+            <Link href="/privacy" className="transition-colors hover:text-white">Privacy</Link>
+            <Link href="/terms" className="transition-colors hover:text-white">Terms</Link>
+          </div>
         </div>
       </SectionContainer>
-      <div aria-hidden="true" className="footer-glow absolute -bottom-32 left-[10%] h-64 w-64 rounded-full blur-[100px]" />
     </footer>
   );
 }

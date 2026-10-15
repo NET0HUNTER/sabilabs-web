@@ -3,8 +3,8 @@ import WorkSection from '@/components/ui/WorkSection';
 import { PageMain } from '@/components/ui/Primitives';
 
 export const metadata: Metadata = {
-  title: 'Projects | SabiLabs',
-  description: 'Selected SabiLabs engagements across enterprise software, workflow automation, education technology, and cybersecurity.',
+  title: 'Projects & Case Studies | SabiLabs',
+  description: 'SabiLabs case studies across enterprise operations, education, workflow automation, and cybersecurity.',
 };
 
 export default function ProjectsPage() {

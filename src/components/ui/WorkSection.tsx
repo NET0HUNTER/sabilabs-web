@@ -1,47 +1,57 @@
 import Link from 'next/link';
+import { caseStudies } from '@/lib/siteContent';
 import { SectionContainer, SectionIntro } from './Primitives';
-import ShowcaseCard, { ShowcaseGrid } from './ShowcaseCard';
-
-const projects = [
-  { title: 'Distribution ERP', category: 'Enterprise Software', challenge: 'A growing distributor managed inventory across branches using spreadsheets and manual reconciliation, leading to stock discrepancies and revenue leakage.', approach: 'A unified distribution platform connected inventory, orders, deliveries, invoicing, and management reporting.', impact: 'Unified inventory visibility, automated order-to-delivery workflow, eliminated manual reconciliation.' },
-  { title: 'Restaurant POS System', category: 'POS & Operations', challenge: 'A restaurant group in Nigeria needed a unified POS across multiple locations with kitchen management and real-time reporting.', approach: 'A multi-location POS connected front-of-house ordering, kitchen workflow, payments, and centralized reporting.', impact: 'Streamlined order-to-kitchen flow, centralized reporting across all locations, reduced order errors.' },
-  { title: 'Commercial Laundry ERP', category: 'Process Automation', challenge: 'A commercial laundry operation had no visibility into garment tracking, leading to lost items and customer disputes.', approach: 'A purpose-built workflow tracked garments, customer orders, processing status, and delivery notifications.', impact: 'End-to-end garment tracking, automated customer notifications, near-zero dispute rate.' },
-  { title: 'School Management ERP', category: 'Education Technology', challenge: 'A secondary school managed admissions, fees, attendance, and grades across disconnected paper systems and spreadsheets.', approach: 'A connected school platform digitized the student lifecycle with mobile payments and offline support.', impact: 'Digitized student lifecycle, mobile fee payments, offline functionality for rural connectivity.' },
-  { title: 'NGO Approval Workflow', category: 'Financial Governance', challenge: "An NGO's financial approval process involved manual email chains, creating audit gaps and delayed disbursements.", approach: 'A multi-level digital approval workflow introduced role-based decisions, audit trails, and Xero synchronization.', impact: 'Multi-level digital approvals with complete audit trails, automated accounting sync with Xero.' },
-  { title: 'SACCO Security Audits', category: 'Cybersecurity', challenge: 'A SACCO needed to assess its cybersecurity posture against regulatory expectations but lacked internal expertise.', approach: 'A structured security audit mapped vulnerabilities, operational risks, and compliance gaps to a prioritized remediation plan.', impact: 'Identified critical vulnerabilities, clear remediation plan, strengthened regulatory readiness.' },
-];
 
 export default function WorkSection({ preview = false }: { preview?: boolean }) {
-  const visibleProjects = preview ? projects.slice(0, 2) : projects;
+  const visibleStudies = preview ? caseStudies.slice(0, 2) : caseStudies;
 
   return (
-    <section id="projects" className="section-shell">
+    <section id="case-studies" className={`section-shell ${preview ? 'home-section' : ''}`}>
       <SectionContainer>
         <SectionIntro
-          eyebrow={preview ? 'Selected Projects' : 'Selected Engagements'}
-          heading="Real Problems. Structured Solutions. Measurable Impact."
-          description="Client engagements where business challenges were translated into practical, measurable technology outcomes."
+          eyebrow="Case Studies"
+          heading={<>Real Operations. Real Challenges. <span className="text-[var(--accent-start)]">Purpose-Built Systems.</span></>}
+          description="See how SabiLabs turns operational requirements into practical technology solutions."
         />
-        <ShowcaseGrid>
-          {visibleProjects.map((project, index) => (
-            <ShowcaseCard
-              key={project.title}
-              sequence={String(index + 1).padStart(2, '0')}
-              kind="Case Study"
-              category={project.category}
-              title={project.title}
-              description={project.challenge}
-              details={[
-                ...(!preview ? [{ label: 'Approach', value: project.approach, accent: 'muted' as const }] : []),
-                { label: 'Impact', value: project.impact, accent: 'cyan' as const },
-              ]}
-              ctaLabel="Discuss a Similar Project"
-              href="/contact"
-            />
+
+        <div className={`grid gap-7 ${preview ? 'lg:grid-cols-2' : 'lg:grid-cols-3'}`}>
+          {visibleStudies.map((study, index) => (
+            <article key={study.slug} className="sabi-card flex flex-col">
+              <div className="flex items-center justify-between gap-4">
+                <p className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent-start)]">{study.industry}</p>
+                <span className="text-xs font-bold tracking-[0.14em] text-slate-600">{String(index + 1).padStart(2, '0')}</span>
+              </div>
+              <h3 className="mt-7 text-3xl font-bold leading-tight tracking-[-0.04em] text-white">{study.title}</h3>
+              {preview ? (
+                <>
+                  <p className="mt-6 text-base leading-7 text-[var(--text-muted)]">{study.solution}</p>
+                  <StudyLine label="Outcome" value={study.results[0]} accent />
+                </>
+              ) : (
+                <>
+                  <StudyLine label="Challenge" value={study.challenge} />
+                  <StudyLine label="Solution" value={study.solution} />
+                  <StudyLine label="Outcome" value={study.results.join(' · ')} accent />
+                </>
+              )}
+              <Link href={`/case-studies/${study.slug}`} className="mt-auto pt-8 text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent-start)] transition-colors hover:text-white">
+                View case study <span aria-hidden="true">→</span>
+              </Link>
+            </article>
           ))}
-        </ShowcaseGrid>
-        {preview ? <Link href="/projects" className="button button-secondary mt-10">View All Projects <span aria-hidden="true">→</span></Link> : null}
+        </div>
+
+        {preview ? <div className="mt-10 text-center"><Link href="/case-studies" className="button button-secondary">View All Case Studies <span aria-hidden="true">→</span></Link></div> : null}
       </SectionContainer>
     </section>
+  );
+}
+
+function StudyLine({ label, value, accent = false }: { label: string; value: string; accent?: boolean }) {
+  return (
+    <div className="mt-7 border-t border-[var(--border)] pt-5">
+      <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500">{label}</p>
+      <p className={`mt-2 text-[15px] leading-6 ${accent ? 'text-slate-200' : 'text-[var(--text-muted)]'}`}>{value}</p>
+    </div>
   );
 }

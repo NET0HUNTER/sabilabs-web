@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'motion/react';
@@ -9,11 +10,10 @@ import { SectionContainer } from './Primitives';
 
 const navLinks = [
   { name: 'Home', href: '/' },
-  { name: 'Services', href: '/services' },
-  { name: 'How We Work', href: '/methodology' },
-  { name: 'Projects', href: '/projects' },
   { name: 'About', href: '/about' },
-  { name: 'Products', href: '/products' },
+  { name: 'Capabilities', href: '/capabilities' },
+  { name: 'Industries', href: '/industries' },
+  { name: 'Case Studies', href: '/case-studies' },
   { name: 'Contact', href: '/contact' },
 ];
 
@@ -44,8 +44,20 @@ export default function Navbar() {
     <>
       <nav className={`site-nav fixed inset-x-0 top-0 z-50 h-[var(--header-height)] border-b transition-all duration-300 ${isScrolled ? 'is-scrolled' : ''}`}>
         <SectionContainer className="flex h-full items-center justify-between gap-5">
-          <Link href="/" className="flex shrink-0 items-center text-xl font-extrabold uppercase tracking-[-0.05em]" aria-label="SabiLabs home">
-            <span>Sabi</span><span className="text-[var(--accent-start)]">Labs</span>
+          <Link
+            href="/"
+            className="flex shrink-0 items-center"
+            aria-label="SabiLabs home"
+          >
+            <Image
+              src="/images/logo-wordmark-transparent.png"
+              alt="SabiLabs"
+              width={536}
+              height={122}
+              priority
+              className="h-9 w-auto sm:h-11 xl:h-12"
+              style={{ filter: 'drop-shadow(0 0 0.75px rgba(255,255,255,0.78)) drop-shadow(0 4px 12px rgba(0,0,0,0.18))' }}
+            />
           </Link>
 
           <div className="hidden items-center gap-5 xl:flex">
