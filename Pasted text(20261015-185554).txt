@@ -1,0 +1,164 @@
+Refine the global SabiLabs footer.
+
+Assume the official logo is already fixed correctly.
+
+Do not change the logo implementation in this task.
+
+CURRENT PROBLEMS
+
+1. The 3D sphere is occupying the middle of the footer and makes the layout feel confused.
+2. The NAVIGATION heading exists but the actual links are not clearly presented underneath it.
+3. The footer feels visually unbalanced.
+4. There is too much empty space above the footer.
+5. The footer should be simpler and more professional.
+
+REMOVE THE 3D SPHERE FROM THE FOOTER.
+
+The footer does not need the animated/3D sphere.
+
+Keep 3D visuals for sections where they support the design, but not inside the global footer.
+
+FOOTER STRUCTURE
+
+Use a clean 3-column desktop layout.
+
+LEFT COLUMN
+
+Official SabiLabs logo
+
+Understanding Businesses.
+Engineering Solutions.
+
+info@sabilabs.co.ke
+
+
+CENTER COLUMN
+
+NAVIGATION
+
+Home
+About
+Capabilities
+Industries
+Case Studies
+Contact
+
+
+RIGHT COLUMN
+
+CONTACT
+
+Nairobi, Kenya
+East Africa & Beyond
+
++254 757 041 695
++254 792 322 034
+
+P.O. Box 79170 – 00400
+Nairobi, Kenya
+
+
+BOTTOM ROW
+
+© 2026 SabiLabs
+
+Privacy
+Terms
+
+LAYOUT
+
+Desktop:
+3 balanced columns
+
+Tablet:
+2 columns where appropriate
+
+Mobile:
+stack vertically
+
+Do not leave an empty middle column.
+
+Do not make the footer excessively tall.
+
+ALIGNMENT
+
+Keep footer content left-aligned inside each column.
+
+Align all three columns from the same top baseline.
+
+Use the same global content container as the rest of the website.
+
+SPACING
+
+Use controlled spacing.
+
+Desktop:
+72–96px top/bottom padding
+
+Column gaps:
+48–80px
+
+Bottom legal row:
+32–40px above/below
+
+Reduce the excessive blank space before the footer begins.
+
+THEME
+
+The footer must respond to the active theme.
+
+Blue theme:
+navy + cyan
+
+Gold theme:
+dark/charcoal + gold
+
+Green theme:
+dark green + emerald
+
+Do not mix theme colors.
+
+TYPOGRAPHY
+
+Use the same global font family.
+
+Keep:
+- labels small and uppercase
+- contact text readable
+- navigation simple
+- email slightly emphasized
+- legal text subtle
+
+DO NOT
+
+- add the 3D sphere back
+- create a huge decorative logo
+- repeat the homepage hero message
+- repeat another CTA inside the footer
+- add unnecessary glow or oversized lines
+
+The footer should feel like a clean final close to the website.
+
+RESPONSIVE
+
+Test:
+1440px
+1280px
+1024px
+768px
+430px
+390px
+
+Ensure:
+- no horizontal scrolling
+- navigation stacks cleanly
+- email does not overflow
+- phone numbers remain readable
+- footer works on all themes
+
+After implementation:
+1. confirm the sphere was removed from the footer
+2. confirm navigation links are visible
+3. confirm the footer is responsive
+4. confirm the blank space above it was reduced
+5. list files changed

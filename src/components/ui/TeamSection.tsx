@@ -97,9 +97,9 @@ export default function TeamSection() {
       <div className="site-container">
         <SectionIntro
           className="reveal-item"
-          eyebrow="Our Team"
-          heading="Business Expertise Meets Engineering Excellence"
-          description={<>We&apos;re not just developers. Our multidisciplinary team combines business analysis, financial expertise, cybersecurity, and engineering — so your technology decisions are informed by more than just code.</>}
+          eyebrow="Team Expertise"
+          heading="Technology Built With the Whole Business in Mind."
+          description={<>Our multidisciplinary team brings together business, financial, process, security, and engineering expertise so solutions work in the real operational environment—not just in code.</>}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -121,7 +121,7 @@ export default function TeamSection() {
         </div>
 
         <div className="text-center text-slate-400 mt-12 text-lg reveal-item">
-          8 specialists. One mission: aligning technology with your business goals.
+          Eight specialists. Operational, financial, technical, and security requirements considered together.
         </div>
       </div>
     </section>

@@ -18,12 +18,12 @@ export default function TrustSection() {
   }, { scope: sectionRef });
 
   return (
-    <section id="trust" ref={sectionRef} className="section-shell font-sans">
+    <section id="trust" ref={sectionRef} className="section-shell home-section font-sans">
       <SectionContainer>
         <SectionIntro
           className="!mb-12 md:!mb-14"
           eyebrow="Our Impact"
-          heading="Measured by Impact, Not Volume"
+          heading="Impact at a Glance"
           headingClassName="editorial-heading"
         />
 
@@ -33,10 +33,6 @@ export default function TrustSection() {
           <Metric value={String(counts[2]).padStart(2, '0')} label="Country" note="Expanding across East Africa" />
           <Metric value={String(counts[3]).padStart(2, '0')} label="Team Members" />
         </div>
-
-        <p className="mx-auto mt-12 max-w-[800px] text-center text-[clamp(0.95rem,1.3vw,1.0625rem)] font-normal leading-8 text-[var(--text-muted)] md:mt-14">
-          We don&apos;t measure success by volume. We measure it by the depth of every engagement, the value created, and the outcomes delivered.
-        </p>
       </SectionContainer>
     </section>
   );

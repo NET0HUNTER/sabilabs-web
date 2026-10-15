@@ -1,10 +1,9 @@
 import HeroSection from '@/components/ui/HeroSection';
 import SiteBackground from '@/components/canvas/SiteBackground';
 import ServicesSection from '@/components/ui/ServicesSection';
-import FrameworkSection from '@/components/ui/FrameworkSection';
+import IndustriesSection from '@/components/ui/IndustriesSection';
 import WorkSection from '@/components/ui/WorkSection';
 import TrustSection from '@/components/ui/TrustSection';
-import ProductsSection from '@/components/ui/ProductsSection';
 import { FinalCta, HomeAboutPreview } from '@/components/ui/HomeSections';
 
 export default function Home() {
@@ -13,11 +12,10 @@ export default function Home() {
       <SiteBackground />
       <HeroSection />
       <ServicesSection preview />
-      <FrameworkSection preview />
+      <IndustriesSection preview />
       <WorkSection preview />
-      <ProductsSection preview />
-      <TrustSection />
       <HomeAboutPreview />
+      <TrustSection />
       <FinalCta />
     </main>
   );

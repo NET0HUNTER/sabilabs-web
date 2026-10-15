@@ -13,9 +13,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.sabilabs.co.ke"),
-  title: "SABILABS | Strategy-Led Technology Consulting | East Africa",
+  title: "SABILABS | Business & Technology Transformation | East Africa",
   description:
-    "SABILABS is a strategy-led technology and cybersecurity consulting firm in Nairobi, Kenya. We solve business problems through custom software engineering, business automation, cloud solutions, and cybersecurity — built on a structured Business Analysis Framework.",
+    "SABILABS transforms business operations into intelligent digital systems through business analysis, software engineering, data intelligence, integration, cloud, automation, and geospatial technology.",
   keywords: [
     "software consulting Kenya",
     "ERP Kenya",
@@ -32,6 +32,10 @@ export const metadata: Metadata = {
     "Kenya Data Protection Act compliance",
     "SACCO security audit",
     "business process optimization",
+    "data engineering Kenya",
+    "business intelligence East Africa",
+    "systems integration Kenya",
+    "geospatial technology Kenya",
     "Microsoft 365 Kenya",
     "Xero integration Kenya",
     "SABILABS",
@@ -54,23 +58,23 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_KE",
     siteName: "SABILABS",
-    title: "SABILABS | Strategy-Led Technology Consulting | East Africa",
+    title: "SABILABS | Business & Technology Transformation | East Africa",
     description:
-      "We don't build software. We solve business problems. SABILABS is a strategy-led technology consulting firm delivering custom software, cybersecurity, and business automation across East Africa.",
+      "We transform business operations into intelligent digital systems designed around how organizations actually work.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "SABILABS — Strategy-Led Technology Consulting",
+        alt: "SABILABS — Business and Technology Transformation",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "SABILABS | Strategy-Led Technology Consulting",
+    title: "SABILABS | Business & Technology Transformation",
     description:
-      "We don't build software. We solve business problems. Custom software, cybersecurity, and business automation for organizations across East Africa.",
+      "Business analysis, software engineering, data intelligence, and technology integration designed around real operations.",
     images: ["/og-image.png"],
     creator: "@sabilabs",
   },
@@ -80,11 +84,14 @@ export const metadata: Metadata = {
   category: "Technology",
   icons: {
     icon: [
-      { url: "/favicon-16.svg", sizes: "16x16", type: "image/svg+xml" },
-      { url: "/favicon-32.svg", sizes: "32x32", type: "image/svg+xml" },
-      { url: "/favicon-48.svg", sizes: "48x48", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any", type: "image/x-icon" },
+      { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-48.png", sizes: "48x48", type: "image/png" },
+      { url: "/icon.png", sizes: "512x512", type: "image/png" },
     ],
-    apple: [{ url: "/apple-touch-icon.svg", sizes: "180x180", type: "image/svg+xml" }],
+    shortcut: [{ url: "/favicon.ico", type: "image/x-icon" }],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
 };
 
@@ -99,9 +106,9 @@ export default function RootLayout({
     "@type": "Organization",
     name: "SABILABS",
     url: "https://sabilabs.co.ke",
-    logo: "https://sabilabs.co.ke/logo.png",
+    logo: "https://sabilabs.co.ke/images/logo.png",
     description:
-      "Strategy-led technology and cybersecurity consulting firm in Nairobi, Kenya. Custom software engineering, business automation, cloud solutions, and cybersecurity.",
+      "Strategy-led technology company in Nairobi, Kenya, designing intelligent digital systems around real operational, financial, data, security, and organizational requirements.",
     foundingLocation: {
       "@type": "Place",
       name: "Nairobi, Kenya",
@@ -115,6 +122,11 @@ export default function RootLayout({
       "Cybersecurity",
       "Business Automation",
       "Cloud Solutions",
+      "Data Engineering",
+      "Business Intelligence",
+      "Systems Integration",
+      "Geospatial Technology",
+      "Business Analysis",
       "ERP Implementation",
       "Digital Transformation",
       "Kenya Data Protection Act Compliance",
@@ -127,7 +139,8 @@ export default function RootLayout({
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "sales",
-      email: "contact@sabilabs.co.ke",
+      email: "info@sabilabs.co.ke",
+      telephone: ["+254757041695", "+254792322034"],
       availableLanguage: ["English", "Swahili"],
     },
   };
@@ -137,12 +150,14 @@ export default function RootLayout({
     "@type": "ProfessionalService",
     name: "SABILABS",
     description:
-      "Strategy-led technology consulting firm specializing in custom software engineering, cybersecurity, business automation, and cloud solutions for organizations in East Africa.",
+      "Strategy-led business and technology transformation company designing digital systems around how organizations operate.",
     url: "https://sabilabs.co.ke",
-    telephone: "+254700000000",
-    email: "contact@sabilabs.co.ke",
+    telephone: ["+254757041695", "+254792322034"],
+    email: "info@sabilabs.co.ke",
     address: {
       "@type": "PostalAddress",
+      postOfficeBoxNumber: "79170",
+      postalCode: "00400",
       addressLocality: "Nairobi",
       addressCountry: "KE",
     },
@@ -155,70 +170,18 @@ export default function RootLayout({
     },
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Technology Consulting Services",
+      name: "Business and Technology Transformation Capabilities",
       itemListElement: [
-        {
-          "@type": "OfferCatalog",
-          name: "Software Engineering",
-          itemListElement: [
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "Custom ERP Development",
-              },
-            },
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "Distribution Management Systems",
-              },
-            },
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "School Management ERP",
-              },
-            },
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "Hospital Management Systems",
-              },
-            },
-          ],
-        },
-        {
-          "@type": "OfferCatalog",
-          name: "Cybersecurity",
-          itemListElement: [
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "Penetration Testing",
-              },
-            },
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "Security Audits",
-              },
-            },
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "Kenya DPA Compliance Readiness",
-              },
-            },
-          ],
-        },
-      ],
+        "Business and Technology Advisory",
+        "Custom Software and Enterprise Systems",
+        "Business Process Automation and AI",
+        "Data Engineering, Analytics and Intelligence",
+        "Systems Integration and Cloud Solutions",
+        "Geospatial Technology and Spatial Intelligence",
+      ].map((name) => ({
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name },
+      })),
     },
   };
 
@@ -270,7 +233,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" data-theme="blue" suppressHydrationWarning>
+    <html lang="en" data-theme="blue" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{

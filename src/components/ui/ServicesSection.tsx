@@ -1,114 +1,73 @@
-'use client';
-
-import { useState } from 'react';
 import Link from 'next/link';
-import { AnimatePresence, motion } from 'motion/react';
-import { Card, SectionContainer, SectionIntro } from './Primitives';
-
-export const services = [
-  {
-    id: 'analysis',
-    title: 'Business Analysis & Advisory',
-    tagline: 'Define the right problem before investing in the solution.',
-    items: ['Business Discovery', 'Stakeholder Workshops', 'Current Process Mapping', 'Pain Point Identification', 'Requirements Engineering', 'Risk Assessment'],
-  },
-  {
-    id: 'software',
-    title: 'Software Engineering',
-    tagline: 'Custom systems built around how your business actually operates.',
-    items: ['Distribution Management Systems', 'Enterprise Resource Planning (ERP)', 'CRM & Customer Management', 'HRMS & Payroll', 'Point of Sale & Retail Systems', 'School & Hospital Management', 'Accounting & Financial Systems', 'Custom Business Applications'],
-  },
-  {
-    id: 'automation',
-    title: 'Business Automation',
-    tagline: 'Eliminate repetitive work. Accelerate decisions. Scale operations.',
-    items: ['Workflow & Process Automation', 'AI-Assisted Automation', 'Digital Transformation Strategy', 'Business Process Optimization'],
-  },
-  {
-    id: 'cloud',
-    title: 'Cloud Solutions',
-    tagline: 'Modern infrastructure without the complexity.',
-    items: ['Cloud Migration & Modernization', 'Microsoft 365 Deployment', 'Google Workspace Setup', 'Zoho & Xero Integration'],
-  },
-  {
-    id: 'security',
-    title: 'Cybersecurity & Compliance',
-    tagline: 'Protect your organization. Satisfy regulators. Sleep better.',
-    items: ['Penetration Testing & Vulnerability Assessments', 'Security & Risk Assessments', 'Managed Security & IT', 'Security Awareness Training', 'Kenya Data Protection Act (DPA) Readiness', 'SACCO Regulatory Compliance', 'Data Protection Impact Assessments (DPIA)'],
-  },
-  {
-    id: 'support',
-    title: 'Support & Continuous Improvement',
-    tagline: 'Keep systems reliable, secure, and aligned as your business evolves.',
-    items: ['Ongoing System Support', 'Performance Monitoring', 'Security Updates', 'Workflow Optimization', 'User Training & Documentation', 'Continuous Improvement Planning'],
-  },
-];
-
-const previewServices = ['analysis', 'software', 'security', 'automation'];
+import { capabilities } from '@/lib/siteContent';
+import { SectionContainer, SectionIntro } from './Primitives';
 
 export default function ServicesSection({ preview = false }: { preview?: boolean }) {
-  const [activeService, setActiveService] = useState(services[0].id);
+  const visibleCapabilities = preview ? capabilities.slice(0, 3) : capabilities;
 
   return (
-    <section id="services" className="section-shell overflow-hidden">
-      <SectionContainer className="relative z-10">
+    <section id="capabilities" className={`section-shell overflow-hidden ${preview ? 'home-section' : ''}`}>
+      <SectionContainer>
         <SectionIntro
-          eyebrow="What We Do"
-          heading="End-to-End Technology & Security Consulting"
-          description="Business-first technology services designed around operational clarity, resilience, and measurable outcomes."
+          eyebrow={preview ? 'What We Do' : 'Business Capabilities'}
+          heading={preview ? 'Technology That Starts With the Business.' : 'From Operational Reality to Working Digital Systems.'}
+          description={preview
+            ? 'We combine strategic clarity, engineering, and automation to improve how organizations operate.'
+            : 'Every capability follows the same discipline: understand the business problem, provide the right expertise, and stay accountable to the operational outcome.'}
         />
 
         {preview ? (
           <>
-            <div className="grid gap-6 md:grid-cols-2">
-              {services.filter((service) => previewServices.includes(service.id)).map((service) => (
-                <Card key={service.id} className="group transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-white/25">
-                  <p className="mb-5 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent-start)]">Core Service</p>
-                  <h3 className="text-2xl font-bold tracking-[-0.03em] text-white">{service.title}</h3>
-                  <p className="mt-4 text-base leading-7 text-[var(--text-muted)]">{service.tagline}</p>
-                </Card>
+            <div className="grid border-y border-[var(--border)] md:grid-cols-3">
+              {visibleCapabilities.map((capability) => (
+                <article key={capability.id} className="group border-b border-[var(--border)] py-8 last:border-b-0 md:border-b-0 md:border-r md:px-7 md:last:border-r-0">
+                  <p className="text-xs font-bold tracking-[0.16em] text-[var(--accent-start)]">{capability.number}</p>
+                  <h3 className="mt-5 text-2xl font-bold leading-tight tracking-[-0.03em] text-white">{capability.title}</h3>
+                  <p className="mt-4 text-base leading-7 text-[var(--text-muted)]">{capability.summary}</p>
+                  <Link href={`/capabilities#${capability.id}`} className="mt-6 inline-flex text-xs font-bold uppercase tracking-[0.13em] text-[var(--accent-start)] transition-colors hover:text-white">
+                    Explore <span aria-hidden="true" className="ml-2">→</span>
+                  </Link>
+                </article>
               ))}
             </div>
-            <Link href="/services" className="button button-secondary mt-10">Explore All Services <span aria-hidden="true">→</span></Link>
+            <div className="mt-10 text-center"><Link href="/capabilities" className="button button-secondary">View All Capabilities <span aria-hidden="true">→</span></Link></div>
           </>
         ) : (
-          <div className="flex flex-col gap-16 lg:flex-row">
-            <div className="w-full lg:w-[70%]">
-              <div className="flex flex-col gap-4">
-                {services.map((service) => (
-                  <div key={service.id} className="relative">
-                    {activeService === service.id ? <motion.div layoutId="service-indicator" className="absolute inset-y-0 left-0 z-10 w-1 rounded-full bg-gradient-to-b from-[var(--accent-start)] to-[var(--accent-end)]" initial={false} transition={{ type: 'spring', stiffness: 300, damping: 30 }} /> : null}
-                    <button onClick={() => setActiveService(service.id)} className={`w-full rounded-r-xl py-6 pl-6 pr-6 text-left transition-all duration-300 ${activeService === service.id ? 'glass-card bg-white/5' : 'border border-transparent hover:bg-white/5'}`} aria-expanded={activeService === service.id}>
-                      <h3 className="mb-2 text-xl font-bold uppercase tracking-wider text-white">{service.title}</h3>
-                      <p className="font-light italic text-slate-400">{service.tagline}</p>
-                    </button>
+          <div className="border-y border-[var(--border)]">
+            {visibleCapabilities.map((capability) => (
+              <article id={capability.id} key={capability.id} className="scroll-mt-28 border-b border-[var(--border)] py-14 last:border-b-0 md:py-20">
+                <header className="grid gap-5 lg:grid-cols-[90px_minmax(0,1fr)_minmax(280px,.7fr)] lg:gap-10">
+                  <p className="text-sm font-bold tracking-[0.16em] text-[var(--accent-start)]">{capability.number}</p>
+                  <h2 className="max-w-2xl text-[clamp(2rem,4vw,3.5rem)] font-extrabold leading-[1.02] tracking-[-0.045em] text-white">{capability.title}</h2>
+                  <p className="text-lg leading-8 text-[var(--text-muted)]">{capability.summary}</p>
+                </header>
 
-                    <AnimatePresence>
-                      {activeService === service.id ? (
-                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: 'easeInOut' }} className="overflow-hidden px-6">
-                          <ul className="grid grid-cols-1 gap-x-8 gap-y-3 pb-6 pt-4 md:grid-cols-2">
-                            {service.items.map((item) => <li key={item} className="flex items-start text-sm font-light leading-relaxed text-slate-300 md:text-base"><span className="mr-3 mt-1 shrink-0 text-[var(--accent-start)]">■</span>{item}</li>)}
-                          </ul>
-                        </motion.div>
-                      ) : null}
-                    </AnimatePresence>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="hidden w-[30%] items-center justify-center lg:flex" aria-hidden="true">
-              <div className="relative h-64 w-64">
-                <div className="absolute inset-0 animate-pulse rounded-full bg-gradient-to-tr from-[var(--accent-start)] to-[var(--accent-end)] opacity-20 blur-3xl" />
-                <div className="absolute inset-4 flex items-center justify-center rounded-full border border-white/10">
-                  <div className="absolute inset-0 rounded-full bg-[var(--accent-start)]/5 backdrop-blur-md" />
-                  <div className="relative h-24 w-24 animate-spin rounded-full bg-gradient-to-tr from-[var(--accent-start)] to-[var(--accent-end)] opacity-80 mix-blend-screen" style={{ animationDuration: '10s' }} />
+                <div className="mt-12 grid gap-8 lg:ml-[130px] lg:grid-cols-3">
+                  <CapabilityList title="Business problems" items={capability.businessProblems} />
+                  <CapabilityList title="Services provided" items={capability.services} />
+                  <CapabilityList title="Expected outcomes" items={capability.outcomes} accent />
                 </div>
-              </div>
-            </div>
+              </article>
+            ))}
           </div>
         )}
       </SectionContainer>
     </section>
+  );
+}
+
+function CapabilityList({ title, items, accent = false }: { title: string; items: string[]; accent?: boolean }) {
+  return (
+    <div className="border-t border-[var(--border)] pt-6">
+      <h3 className={`text-xs font-bold uppercase tracking-[0.15em] ${accent ? 'text-[var(--accent-start)]' : 'text-slate-300'}`}>{title}</h3>
+      <ul className="mt-5 grid gap-3">
+        {items.map((item) => (
+          <li key={item} className="flex gap-3 text-[15px] leading-6 text-[var(--text-muted)]">
+            <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent-start)]" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

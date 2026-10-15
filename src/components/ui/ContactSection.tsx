@@ -75,10 +75,13 @@ export default function ContactSection() {
                     required
                   >
                     <option value="" disabled>Select an area of interest</option>
-                    <option value="Software Engineering">Software Engineering</option>
-                    <option value="Business Automation">Business Automation</option>
-                    <option value="Cloud Solutions">Cloud Solutions</option>
-                    <option value="Cybersecurity &amp; Compliance">Cybersecurity &amp; Compliance</option>
+                    <option value="Business and Technology Advisory">Business and Technology Advisory</option>
+                    <option value="Custom Software and Enterprise Systems">Custom Software and Enterprise Systems</option>
+                    <option value="Business Process Automation and AI">Business Process Automation and AI</option>
+                    <option value="Data Engineering, Analytics and Intelligence">Data Engineering, Analytics and Intelligence</option>
+                    <option value="Systems Integration and Cloud Solutions">Systems Integration and Cloud Solutions</option>
+                    <option value="Geospatial Technology and Spatial Intelligence">Geospatial Technology and Spatial Intelligence</option>
+                    <option value="Cross-Capability Engagement">Cross-Capability Engagement</option>
                     <option value="Not Sure Yet">Not Sure Yet</option>
                   </select>
                   {errors.interest ? <span id="interest-error" className="text-xs text-rose-300">{errors.interest}</span> : null}
@@ -93,13 +96,18 @@ export default function ContactSection() {
           <aside className="border-t border-white/10 pt-10 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-1">
             <Eyebrow>Direct Contact</Eyebrow>
             <div className="mt-10 grid gap-10">
-              <ContactDetail label="Email"><a href="mailto:contact@sabilabs.co.ke" className="break-all hover:text-[var(--accent-start)]">contact@sabilabs.co.ke</a></ContactDetail>
-              <ContactDetail label="Phone"><a href="tel:+254700000000" className="hover:text-[var(--accent-start)]">+254 700 000 000</a></ContactDetail>
-              <ContactDetail label="Location">Nairobi, Kenya</ContactDetail>
+              <ContactDetail label="Email"><a href="mailto:info@sabilabs.co.ke" className="break-all hover:text-[var(--accent-start)]">info@sabilabs.co.ke</a></ContactDetail>
+              <ContactDetail label="Phone">
+                <span className="grid gap-1">
+                  <a href="tel:+254757041695" className="hover:text-[var(--accent-start)]">+254 757 041 695</a>
+                  <a href="tel:+254792322034" className="hover:text-[var(--accent-start)]">+254 792 322 034</a>
+                </span>
+              </ContactDetail>
+              <ContactDetail label="Postal Address">P.O. Box 79170 – 00400<br />Nairobi, Kenya</ContactDetail>
             </div>
             <div className="mt-12 flex flex-col items-start gap-5">
-              <a href="mailto:contact@sabilabs.co.ke?subject=Schedule%20a%20SabiLabs%20Demo" className="button button-secondary">Schedule a Demo</a>
-              <a href="mailto:contact@sabilabs.co.ke?subject=Security%20Assessment" className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent-start)] transition-colors hover:text-white">Get a Security Assessment →</a>
+              <a href="mailto:info@sabilabs.co.ke?subject=Schedule%20a%20SabiLabs%20Demo" className="button button-secondary">Schedule a Demo</a>
+              <a href="mailto:info@sabilabs.co.ke?subject=Security%20Assessment" className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent-start)] transition-colors hover:text-white">Get a Security Assessment →</a>
             </div>
           </aside>
         </div>

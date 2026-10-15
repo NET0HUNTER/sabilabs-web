@@ -102,6 +102,7 @@
   body {
     background-color: var(--bg-dark);
     color: var(--text-primary);
+    overflow-x: clip;
     transition: background-color 0.35s ease, color 0.35s ease;
     font-family: var(--font-sans);
     font-size: 17px;
@@ -112,6 +113,7 @@
   /* Smooth scroll for anchor links */
   html {
     scroll-behavior: smooth;
+    overflow-x: clip;
   }
 
   /* Focus-visible outlines for accessibility */
@@ -131,9 +133,48 @@
   .section-shell {
     position: relative;
     z-index: 10;
+    display: flex;
+    min-height: 100svh;
+    align-items: center;
     padding-block: var(--section-space);
     background: var(--bg-dark);
     transition: background-color 0.35s ease;
+  }
+
+  .section-shell > .site-container {
+    width: 100%;
+  }
+
+  .home-section {
+    min-height: auto;
+    padding-block: clamp(80px, 7vw, 100px);
+  }
+
+  .about-hero {
+    min-height: auto;
+    align-items: flex-start;
+    padding-top: 64px;
+    padding-bottom: 72px;
+  }
+
+  .about-hero .about-hero__intro {
+    max-width: 1040px;
+  }
+
+  .about-hero .eyebrow {
+    margin-bottom: 20px;
+  }
+
+  .about-hero .about-hero__heading {
+    font-size: clamp(2.125rem, 8.4vw, 2.5rem);
+    line-height: 1.08;
+  }
+
+  .about-hero .about-hero__description {
+    max-width: 900px;
+    margin-top: 28px;
+    font-size: 17px;
+    line-height: 1.6;
   }
 
   .section-intro {
@@ -312,17 +353,47 @@
   .footer-glow {
     background: color-mix(in srgb, var(--accent) 10%, transparent);
   }
+
+  .footer-grid {
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: linear-gradient(to bottom, transparent, black 28%, black 76%, transparent);
+  }
 }
 
 @media (max-width: 767px) {
   :root { --section-space: 64px; --radius-card: 16px; --header-height: 72px; }
   body { font-size: 16px; }
+  .home-section { padding-block: clamp(48px, 12vw, 64px); }
   .section-heading { font-size: clamp(2.125rem, 10vw, 2.5rem); }
   .editorial-heading { font-size: clamp(2rem, 9vw, 2.375rem); }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
   :root { --section-space: 80px; }
+  .home-section { padding-block: clamp(64px, 8vw, 80px); }
+  .about-hero { padding-block: 80px; }
+  .about-hero .eyebrow { margin-bottom: 22px; }
+  .about-hero .about-hero__heading { font-size: clamp(2.75rem, 5.5vw, 3.25rem); }
+  .about-hero .about-hero__description {
+    margin-top: 32px;
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-hero {
+    padding-top: clamp(90px, 7.5vw, 110px);
+    padding-bottom: clamp(80px, 6.5vw, 96px);
+  }
+  .about-hero .eyebrow { margin-bottom: 24px; }
+  .about-hero .about-hero__heading { font-size: clamp(3.5rem, 4.7vw, 4.25rem); }
+  .about-hero .about-hero__description {
+    margin-top: 36px;
+    font-size: clamp(18px, 1.4vw, 20px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
