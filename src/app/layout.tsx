@@ -1,21 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import Navbar from "@/components/ui/Navbar";
 import FooterSection from "@/components/ui/FooterSection";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
-
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.sabilabs.co.ke"),
-  title: "SABILABS | Business & Technology Transformation | East Africa",
+  title: "SABILABS | Business Technology & Intelligence",
   description:
-    "SABILABS transforms business operations into intelligent digital systems through business analysis, software engineering, data intelligence, integration, cloud, automation, and geospatial technology.",
+    "Sabi Labs Limited is a business technology and intelligence company that designs secure, intelligent digital systems around how organizations actually operate.",
   keywords: [
     "software consulting Kenya",
     "ERP Kenya",
@@ -58,7 +52,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_KE",
     siteName: "SABILABS",
-    title: "SABILABS | Business & Technology Transformation | East Africa",
+    title: "SABILABS | Business Technology & Intelligence",
     description:
       "We transform business operations into intelligent digital systems designed around how organizations actually work.",
     images: [
@@ -66,13 +60,13 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "SABILABS — Business and Technology Transformation",
+        alt: "SABILABS — Business Technology & Intelligence",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "SABILABS | Business & Technology Transformation",
+    title: "SABILABS | Business Technology & Intelligence",
     description:
       "Business analysis, software engineering, data intelligence, and technology integration designed around real operations.",
     images: ["/og-image.png"],
@@ -108,7 +102,7 @@ export default function RootLayout({
     url: "https://sabilabs.co.ke",
     logo: "https://sabilabs.co.ke/images/logo.png",
     description:
-      "Strategy-led technology company in Nairobi, Kenya, designing intelligent digital systems around real operational, financial, data, security, and organizational requirements.",
+      "Business technology and intelligence company in Nairobi, Kenya, designing secure, intelligent digital systems around real operational, financial, data, security, and organizational requirements.",
     foundingLocation: {
       "@type": "Place",
       name: "Nairobi, Kenya",
@@ -150,7 +144,7 @@ export default function RootLayout({
     "@type": "ProfessionalService",
     name: "SABILABS",
     description:
-      "Strategy-led business and technology transformation company designing digital systems around how organizations operate.",
+      "Business technology and intelligence company designing secure digital systems around how organizations operate.",
     url: "https://sabilabs.co.ke",
     telephone: ["+254757041695", "+254792322034"],
     email: "info@sabilabs.co.ke",
@@ -170,7 +164,7 @@ export default function RootLayout({
     },
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Business and Technology Transformation Capabilities",
+      name: "Business Technology and Intelligence Capabilities",
       itemListElement: [
         "Business and Technology Advisory",
         "Custom Software and Enterprise Systems",
@@ -199,10 +193,10 @@ export default function RootLayout({
       },
       {
         "@type": "Question",
-        name: "What is SABILABS' Business Analysis Framework?",
+        name: "What is SABILABS' delivery approach?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Every SABILABS engagement follows a structured 12-stage methodology: Business Discovery, Stakeholder Workshops, Current Process Mapping, Pain Point Identification, Requirements Engineering, Risk Assessment, Solution Architecture, Validation, Development, Testing, Deployment, and Continuous Improvement. This approach reduces project failure, unnecessary costs, scope creep, and rework.",
+          text: "Every SABILABS engagement follows six connected steps: Discover, Analyze, Design, Engineer, Implement, and Improve. The approach begins with the organization and carries business, security, data, and technical requirements through implementation and continuous improvement.",
         },
       },
       {
@@ -233,11 +227,11 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" data-theme="blue" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="en" data-theme="white" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("sabilabs-theme");if(t==="blue"||t==="gold"||t==="green")document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`,
+            __html: `(function(){try{var t=localStorage.getItem("sabilabs-theme");if(t!=="white"&&t!=="blue"&&t!=="green"){t="white";localStorage.setItem("sabilabs-theme",t)}document.documentElement.setAttribute("data-theme",t)}catch(e){document.documentElement.setAttribute("data-theme","white")}})()`,
           }}
         />
         <script
@@ -259,7 +253,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className="font-sans antialiased">
         <ThemeProvider>
           <SmoothScrollProvider>
             <Navbar />

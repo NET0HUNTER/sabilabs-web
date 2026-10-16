@@ -97,27 +97,27 @@ export default function PainPointsSection() {
   return (
     <section id="pain-points" ref={sectionRef} className="section-shell">
       <div className="site-container">
-        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mb-16 text-center">
+        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-[var(--text-primary)] mb-16 text-center">
           Sound Familiar?
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {painPoints.map((point, i) => (
-            <div key={i} className="reveal-item sabi-card group transition-all duration-300 hover:-translate-y-1 hover:border-white/25">
-              <div className="w-12 h-12 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xl mb-6 group-hover:border-[var(--accent-start)] transition-colors">
+            <div key={i} className="reveal-item sabi-card group transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--border-strong)]">
+              <div className="w-12 h-12 rounded-full bg-[var(--surface-strong)] border border-[var(--border)] flex items-center justify-center text-xl mb-6 group-hover:border-[var(--accent)] transition-colors">
                 {point.icon}
               </div>
-              <h3 className="text-xl font-bold text-white mb-3 tracking-tight">
+              <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3 tracking-tight">
                 {point.title}
               </h3>
-              <p className="text-slate-400 font-light leading-relaxed">
+              <p className="text-[var(--text-secondary)] font-normal leading-relaxed">
                 {point.description}
               </p>
             </div>
           ))}
         </div>
 
-        <p className="text-xl text-slate-300 font-light text-center max-w-3xl mx-auto mt-16 reveal-item">
+        <p className="text-xl text-[var(--text-secondary)] font-normal text-center max-w-3xl mx-auto mt-16 reveal-item">
           If even one of these sounds familiar, you don&apos;t have a technology problem. You have a business operations problem. That&apos;s exactly what we solve.
         </p>
       </div>

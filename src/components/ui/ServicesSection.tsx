@@ -18,13 +18,13 @@ export default function ServicesSection({ preview = false }: { preview?: boolean
 
         {preview ? (
           <>
-            <div className="grid border-y border-[var(--border)] md:grid-cols-3">
+            <div className="grid gap-5 md:grid-cols-3">
               {visibleCapabilities.map((capability) => (
-                <article key={capability.id} className="group border-b border-[var(--border)] py-8 last:border-b-0 md:border-b-0 md:border-r md:px-7 md:last:border-r-0">
-                  <p className="text-xs font-bold tracking-[0.16em] text-[var(--accent-start)]">{capability.number}</p>
-                  <h3 className="mt-5 text-2xl font-bold leading-tight tracking-[-0.03em] text-white">{capability.title}</h3>
-                  <p className="mt-4 text-base leading-7 text-[var(--text-muted)]">{capability.summary}</p>
-                  <Link href={`/capabilities#${capability.id}`} className="mt-6 inline-flex text-xs font-bold uppercase tracking-[0.13em] text-[var(--accent-start)] transition-colors hover:text-white">
+                <article key={capability.id} className="glass-tile group flex min-h-[260px] flex-col p-7 md:p-8">
+                  <p className="text-xs font-bold tracking-[0.16em] text-[var(--accent)]">{capability.number}</p>
+                  <h3 className="mt-5 text-2xl font-bold leading-tight tracking-[-0.03em] text-[var(--text-primary)]">{capability.title}</h3>
+                  <p className="mt-4 text-base leading-7 text-[var(--text-secondary)]">{capability.summary}</p>
+                  <Link href={`/capabilities#${capability.id}`} className="ui-link mt-auto inline-flex pt-7 text-xs font-bold uppercase tracking-[0.13em] transition-colors">
                     Explore <span aria-hidden="true" className="ml-2">→</span>
                   </Link>
                 </article>
@@ -33,13 +33,13 @@ export default function ServicesSection({ preview = false }: { preview?: boolean
             <div className="mt-10 text-center"><Link href="/capabilities" className="button button-secondary">View All Capabilities <span aria-hidden="true">→</span></Link></div>
           </>
         ) : (
-          <div className="border-y border-[var(--border)]">
-            {visibleCapabilities.map((capability) => (
-              <article id={capability.id} key={capability.id} className="scroll-mt-28 border-b border-[var(--border)] py-14 last:border-b-0 md:py-20">
+          <div>
+            {visibleCapabilities.map((capability, index) => (
+              <article id={capability.id} key={capability.id} className={`scroll-mt-28 py-12 md:py-16 ${index < visibleCapabilities.length - 1 ? 'border-b border-[var(--border)]' : ''} ${index % 2 === 1 ? 'glass-panel my-7 px-6 md:px-10' : ''}`}>
                 <header className="grid gap-5 lg:grid-cols-[90px_minmax(0,1fr)_minmax(280px,.7fr)] lg:gap-10">
-                  <p className="text-sm font-bold tracking-[0.16em] text-[var(--accent-start)]">{capability.number}</p>
-                  <h2 className="max-w-2xl text-[clamp(2rem,4vw,3.5rem)] font-extrabold leading-[1.02] tracking-[-0.045em] text-white">{capability.title}</h2>
-                  <p className="text-lg leading-8 text-[var(--text-muted)]">{capability.summary}</p>
+                  <p className="text-sm font-bold tracking-[0.16em] text-[var(--accent)]">{capability.number}</p>
+                  <h2 className="max-w-2xl text-[clamp(2rem,4vw,3.35rem)] font-extrabold leading-[1.05] tracking-[-0.04em] text-[var(--text-primary)]">{capability.title}</h2>
+                  <p className="text-lg leading-8 text-[var(--text-secondary)]">{capability.summary}</p>
                 </header>
 
                 <div className="mt-12 grid gap-8 lg:ml-[130px] lg:grid-cols-3">
@@ -59,11 +59,11 @@ export default function ServicesSection({ preview = false }: { preview?: boolean
 function CapabilityList({ title, items, accent = false }: { title: string; items: string[]; accent?: boolean }) {
   return (
     <div className="border-t border-[var(--border)] pt-6">
-      <h3 className={`text-xs font-bold uppercase tracking-[0.15em] ${accent ? 'text-[var(--accent-start)]' : 'text-slate-300'}`}>{title}</h3>
+      <h3 className={`text-xs font-bold uppercase tracking-[0.15em] ${accent ? 'text-[var(--accent)]' : 'text-[var(--text-secondary)]'}`}>{title}</h3>
       <ul className="mt-5 grid gap-3">
         {items.map((item) => (
-          <li key={item} className="flex gap-3 text-[15px] leading-6 text-[var(--text-muted)]">
-            <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent-start)]" />
+          <li key={item} className="flex gap-3 text-[15px] leading-6 text-[var(--text-secondary)]">
+            <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" />
             <span>{item}</span>
           </li>
         ))}

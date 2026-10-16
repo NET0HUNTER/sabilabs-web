@@ -19,6 +19,7 @@ const navLinks = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { theme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -50,18 +51,17 @@ export default function Navbar() {
             aria-label="SabiLabs home"
           >
             <Image
-              src="/images/logo-wordmark-transparent.png"
+              src={theme === 'white' ? '/images/logo-wordmark-transparent.png' : '/images/logo-wordmark-blue-dark.png'}
               alt="SabiLabs"
               width={536}
               height={122}
               priority
-              className="h-9 w-auto sm:h-11 xl:h-12"
-              style={{ filter: 'drop-shadow(0 0 0.75px rgba(255,255,255,0.78)) drop-shadow(0 4px 12px rgba(0,0,0,0.18))' }}
+              className="nav-logo h-9 w-auto sm:h-10"
             />
           </Link>
 
-          <div className="hidden items-center gap-5 xl:flex">
-            <div className="flex items-center gap-[clamp(0.75rem,1.25vw,1.125rem)]">
+          <div className="navbar-desktop hidden items-center xl:flex">
+            <div className="navbar-links flex items-center">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
                 return (
@@ -69,40 +69,40 @@ export default function Navbar() {
                     key={link.name}
                     href={link.href}
                     aria-current={active ? 'page' : undefined}
-                    className={`group relative py-3 text-[11px] font-semibold uppercase tracking-[0.11em] transition-colors ${active ? 'text-[var(--accent-start)]' : 'text-slate-300 hover:text-white'}`}
+                    className={`navbar-link group relative inline-flex min-h-10 items-center text-[11px] font-semibold uppercase tracking-[0.11em] transition-colors ${active ? 'text-[var(--brand-chrome-accent)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
                   >
                     {link.name}
-                    <span className={`absolute inset-x-0 bottom-1 h-px origin-left bg-[var(--accent-start)] transition-transform ${active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
+                    <span className={`navbar-active-indicator absolute left-1/2 bottom-0.5 h-px w-[68%] -translate-x-1/2 bg-[var(--brand-chrome-accent)] transition-transform ${active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
                   </Link>
                 );
               })}
             </div>
 
-            <div className="border-l border-[var(--border)] pl-5">
+            <div className="navbar-theme-cluster flex min-h-10 items-center border-l border-[var(--brand-shell-border)]">
               <ThemeSwitcher />
             </div>
 
-            <Link href="/contact" className="button button-secondary min-h-10 px-5 py-2 text-[11px]">Book a Consultation</Link>
+            <Link href="/contact" className="navbar-cta button min-h-10 px-5 py-2 text-[11px]">Book a Consultation</Link>
           </div>
 
-          <button className="relative z-50 flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-full border border-white/10 xl:hidden" onClick={() => setIsMobileMenuOpen((open) => !open)} aria-expanded={isMobileMenuOpen} aria-controls="mobile-navigation" aria-label="Toggle menu">
-            <motion.span animate={isMobileMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }} className="h-0.5 w-5 bg-white" />
-            <motion.span animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }} className="h-0.5 w-5 bg-white" />
-            <motion.span animate={isMobileMenuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }} className="h-0.5 w-5 bg-white" />
+          <button className="relative z-50 flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-[var(--radius-sm)] border border-[var(--brand-shell-border)] bg-[var(--glass-surface)] xl:hidden" onClick={() => setIsMobileMenuOpen((open) => !open)} aria-expanded={isMobileMenuOpen} aria-controls="mobile-navigation" aria-label="Toggle menu">
+            <motion.span animate={isMobileMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }} className="h-0.5 w-5 bg-[var(--text-primary)]" />
+            <motion.span animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }} className="h-0.5 w-5 bg-[var(--text-primary)]" />
+            <motion.span animate={isMobileMenuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }} className="h-0.5 w-5 bg-[var(--text-primary)]" />
           </button>
         </SectionContainer>
       </nav>
 
       <AnimatePresence>
         {isMobileMenuOpen ? (
-          <motion.div id="mobile-navigation" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="mobile-navigation fixed inset-0 z-40 flex flex-col items-center justify-center gap-5 px-6 pt-[var(--header-height)] backdrop-blur-xl xl:hidden">
+          <motion.div id="mobile-navigation" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="mobile-navigation fixed inset-0 z-40 flex flex-col items-center justify-center gap-5 px-6 pt-[var(--header-height)] xl:hidden">
             {navLinks.map((link) => {
               const active = isActive(link.href);
               return (
-                <Link key={link.name} href={link.href} onClick={() => setIsMobileMenuOpen(false)} aria-current={active ? 'page' : undefined} className={`text-2xl font-bold uppercase tracking-[-0.03em] transition-colors ${active ? 'text-[var(--accent-start)]' : 'text-white hover:text-[var(--accent-start)]'}`}>{link.name}</Link>
+                <Link key={link.name} href={link.href} onClick={() => setIsMobileMenuOpen(false)} aria-current={active ? 'page' : undefined} className={`text-2xl font-bold uppercase tracking-[-0.03em] transition-colors ${active ? 'text-[var(--brand-chrome-accent)]' : 'text-[var(--text-primary)] hover:text-[var(--brand-chrome-accent)]'}`}>{link.name}</Link>
               );
             })}
-            <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="button button-primary mt-3">Book a Consultation</Link>
+            <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="navbar-mobile-cta button button-primary mt-3">Book a Consultation</Link>
             <ThemeSwitcher className="mt-2" />
           </motion.div>
         ) : null}
@@ -112,8 +112,8 @@ export default function Navbar() {
 }
 
 const themeLabels: Record<Theme, string> = {
+  white: 'White',
   blue: 'Blue',
-  gold: 'Gold',
   green: 'Green',
 };
 

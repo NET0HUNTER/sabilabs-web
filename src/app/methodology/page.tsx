@@ -4,7 +4,7 @@ import { PageMain } from '@/components/ui/Primitives';
 
 export const metadata: Metadata = {
   title: 'How We Work | SabiLabs',
-  description: 'Explore the four-phase SabiLabs methodology for discovering, defining, building, and improving business technology solutions.',
+  description: 'Explore the six-step SabiLabs approach: discover, analyze, design, engineer, implement, and improve.',
 };
 
 export default function MethodologyPage() {

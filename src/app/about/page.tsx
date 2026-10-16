@@ -21,7 +21,7 @@ export default function AboutPage() {
             descriptionClassName="about-hero__description"
             eyebrow="About SabiLabs"
             heading="Business Insight. Technical Depth. One Accountable Team."
-            description="SabiLabs is a strategy-led technology company that studies how organizations operate, identifies what is holding them back, and designs intelligent digital systems around those realities."
+            description="Sabi Labs Limited is a business technology and intelligence company that combines business analysis, software engineering, data intelligence, systems integration, and technology consultancy to design and implement digital solutions tailored to organizational needs."
           />
         </SectionContainer>
       </section>
@@ -32,8 +32,8 @@ export default function AboutPage() {
         <SectionContainer>
           <SectionIntro
             eyebrow="Working With Clients"
-            heading="Discovery Before Delivery. Shared Decisions Throughout."
-            description="We move from operational discovery and requirements through architecture, implementation, and continuous improvement—with stakeholders involved at every important decision."
+            heading="Discover. Analyze. Design. Engineer. Implement. Improve."
+            description="Our six-step approach moves from organizational understanding to secure implementation and continuous improvement, with stakeholders involved at every important decision."
           />
           <div className="text-center">
             <Link href="/methodology" className="button button-secondary">Explore Our Methodology <span aria-hidden="true">→</span></Link>

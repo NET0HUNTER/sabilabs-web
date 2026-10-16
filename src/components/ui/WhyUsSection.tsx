@@ -1,52 +1,36 @@
-'use client';
-
-import { useRef } from 'react';
 import Link from 'next/link';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Card, Eyebrow, SectionContainer, SectionHeading } from './Primitives';
+import { Eyebrow, SectionContainer } from './Primitives';
 
-if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
-
-const differentiators = [
-  ['Strategy Before Software', 'We invest time understanding your business before proposing a single technology decision.'],
-  ['Security by Design', 'Every system we build has security woven into its architecture — not bolted on as an afterthought.'],
-  ['Business-First Thinking', 'We measure success by your operational outcomes, not lines of code delivered.'],
-  ['Scalable Infrastructure', "We build systems designed to handle your growth seamlessly, ensuring you don't need a costly rebuild in two years."],
-  ['Transparent Communication', 'No black boxes. Regular progress updates, demos, and honest conversations about trade-offs.'],
-  ['Vendor-Neutral Recommendations', "We recommend the right technology for your problem — not the technology we're most comfortable with."],
-  ['Long-Term Partnerships', "We don't disappear after deployment. We stay, optimize, and grow with your business."],
+const principles = [
+  ['Business first', 'Operational and strategic realities define the technology direction.'],
+  ['Secure by design', 'Security and responsible data handling are considered from the start.'],
+  ['One accountable team', 'Business, financial, process, data, security, and engineering perspectives stay connected.'],
+  ['Built for change', 'Solutions are designed to remain useful as the organization evolves.'],
 ];
 
 export default function WhyUsSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  useGSAP(() => {
-    gsap.utils.toArray<HTMLElement>('.principle-card').forEach((el) => gsap.from(el, { y: 24, opacity: 0, duration: .65, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } }));
-  }, { scope: sectionRef });
-
   return (
-    <section id="why-us" ref={sectionRef} className="section-shell">
+    <section id="commitment" className="section-shell border-y border-[var(--border)]">
       <SectionContainer>
-        <div className="section-intro centered">
-          <Eyebrow>Why SabiLabs</Eyebrow>
-          <SectionHeading>Not the Right Fit for Everyone.</SectionHeading>
-          <p className="mt-4 text-sm font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">And that&apos;s the point.</p>
-        </div>
-
-        <Card className="mx-auto mb-12 max-w-4xl border-l-2 border-l-[var(--accent-start)] md:p-10">
-          <p className="text-lg leading-8 text-slate-200">If you&apos;re looking for a technology partner who will challenge your assumptions, understand your business deeply, and build solutions that create long-term value — let&apos;s talk.</p>
-          <Link href="/contact" className="mt-6 inline-flex text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent-start)]">Start the conversation →</Link>
-        </Card>
-
-        <div className="grid grid-cols-1 gap-7 md:grid-cols-2">
-          {differentiators.map(([title, description], index) => (
-            <Card key={title} className={`principle-card flex min-h-[250px] flex-col ${index === 6 ? 'md:col-start-1 md:translate-x-[calc(50%+14px)]' : ''}`}>
-              <span className="mb-8 text-sm font-bold tracking-[0.14em] text-[var(--accent-start)]">{String(index + 1).padStart(2, '0')}</span>
-              <h3 className="mb-3 text-2xl font-bold tracking-[-0.03em] text-white">{title}</h3>
-              <p className="mt-auto text-[16px] leading-7 text-[var(--text-muted)]">{description}</p>
-            </Card>
-          ))}
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1.25fr)_minmax(300px,.75fr)] lg:gap-20">
+          <div>
+            <Eyebrow>Our Commitment</Eyebrow>
+            <h2 className="section-heading">Technology Should Fit the Organization.</h2>
+            <p className="mt-8 max-w-3xl text-[clamp(1.2rem,2vw,1.65rem)] leading-[1.55] text-[var(--text-primary)]">Sabi Labs does not believe in forcing organizations to adapt to technology that does not fit their operations.</p>
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-[var(--text-secondary)]">We first understand the organization, then engineer technology around its needs. That principle keeps decisions grounded in operational, financial, technical, data, and security requirements—not a predetermined product.</p>
+            <Link href="/contact" className="button button-primary mt-9">Book a Consultation <span aria-hidden="true">→</span></Link>
+          </div>
+          <div className="border-y border-[var(--border)]">
+            {principles.map(([title, description], index) => (
+              <div key={title} className="grid grid-cols-[38px_minmax(0,1fr)] gap-4 border-b border-[var(--border)] py-6 last:border-b-0">
+                <span className="text-xs font-bold tracking-[0.14em] text-[var(--accent)]">{String(index + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3 className="font-bold text-[var(--text-primary)]">{title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">{description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </SectionContainer>
     </section>

@@ -27,7 +27,7 @@ export default function TrustSection() {
           headingClassName="editorial-heading"
         />
 
-        <div className="grid grid-cols-2 gap-x-6 gap-y-10 border-y border-white/[0.08] py-10 sm:gap-x-8 md:py-12 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 border-y border-[var(--border)] py-10 sm:gap-x-8 md:py-12 lg:grid-cols-4">
           <Metric value={String(counts[0]).padStart(2, '0')} label="Clients Served" />
           <Metric value={String(counts[1]).padStart(2, '0')} label="Projects Delivered" />
           <Metric value={String(counts[2]).padStart(2, '0')} label="Country" note="Expanding across East Africa" />
