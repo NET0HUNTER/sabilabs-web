@@ -35,7 +35,7 @@ export default function CapabilitiesSection() {
         
         {/* Left: Interactive Accordion */}
         <div className="flex flex-col gap-6">
-          <h2 className="text-3xl md:text-5xl font-black mb-8 uppercase tracking-tighter text-white">
+          <h2 className="text-3xl md:text-5xl font-black mb-8 uppercase tracking-tighter text-[var(--text-primary)]">
             CORE<br/>CAPABILITIES.
           </h2>
           
@@ -44,11 +44,11 @@ export default function CapabilitiesSection() {
               <button
                 key={cap.id}
                 onClick={() => setActiveCap(cap.id)}
-                className={`text-left group relative py-6 border-b border-white/10 transition-colors ${
+                className={`text-left group relative py-6 border-b border-[var(--border)] transition-colors ${
                   activeCap === cap.id ? 'opacity-100' : 'opacity-40 hover:opacity-70'
                 }`}
               >
-                <span className="block text-xl font-bold uppercase tracking-wider mb-2 text-white">
+                <span className="block text-xl font-bold uppercase tracking-wider mb-2 text-[var(--text-primary)]">
                   {cap.title}
                 </span>
                 
@@ -61,7 +61,7 @@ export default function CapabilitiesSection() {
                       transition={{ duration: 0.4, ease: 'circOut' }}
                       className="overflow-hidden"
                     >
-                      <p className="pt-4 text-slate-300 font-light leading-relaxed max-w-md">
+                      <p className="pt-4 text-[var(--text-secondary)] font-normal leading-relaxed max-w-md">
                         {cap.description}
                       </p>
                     </motion.div>
@@ -72,7 +72,7 @@ export default function CapabilitiesSection() {
                 {activeCap === cap.id && (
                   <motion.div 
                     layoutId="indicator"
-                    className="absolute left-0 bottom-0 w-full h-[2px] bg-[var(--accent-start)]"
+                    className="absolute bottom-0 left-0 h-[2px] w-full bg-[var(--accent)]"
                   />
                 )}
               </button>
@@ -80,21 +80,19 @@ export default function CapabilitiesSection() {
           </div>
         </div>
 
-        {/* Right: Abstract UI Representation */}
-        <div className="relative aspect-square w-full max-w-md mx-auto glass-card rounded-full flex items-center justify-center overflow-hidden">
-          {/* Dynamic glowing core based on active capability */}
+        {/* Right: restrained system diagram */}
+        <div className="relative mx-auto aspect-square w-full max-w-md overflow-hidden rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)]">
+          <div className="absolute inset-x-10 top-1/3 h-px bg-[var(--border)]" />
+          <div className="absolute inset-x-10 top-2/3 h-px bg-[var(--border)]" />
+          <div className="absolute inset-y-10 left-1/3 w-px bg-[var(--border)]" />
+          <div className="absolute inset-y-10 left-2/3 w-px bg-[var(--border)]" />
           <motion.div 
             key={activeCap}
-            initial={{ scale: 0.8, opacity: 0, rotate: -45 }}
-            animate={{ scale: 1, opacity: 1, rotate: 0 }}
-            transition={{ duration: 0.8, ease: 'backOut' }}
-            className="absolute inset-20 border border-[var(--accent-start)] rounded-full mix-blend-screen"
-            style={{ 
-              boxShadow: '0 0 60px var(--accent-start)',
-              borderStyle: activeCap === 'automation' ? 'dotted' : activeCap === 'software' ? 'dashed' : 'solid',
-            }}
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
+            className="absolute inset-[32%] rounded-[var(--radius-sm)] border border-[var(--accent)] bg-[var(--accent-soft)]"
           />
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMSkiLz4KPC9zdmc+')] opacity-50" />
         </div>
 
       </div>

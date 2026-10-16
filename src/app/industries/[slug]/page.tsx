@@ -36,7 +36,7 @@ export default async function IndustryPage({ params }: PageProps<'/industries/[s
               <Eyebrow>Operational Context</Eyebrow>
               <h2 className="section-heading">Understand the environment before defining the system.</h2>
             </div>
-            <p className="text-xl leading-9 text-slate-200">{industry.operationalContext}</p>
+            <p className="text-xl leading-9 text-[var(--text-primary)]">{industry.operationalContext}</p>
           </div>
 
           <div className="mt-20 grid gap-8 md:grid-cols-2">
@@ -47,7 +47,7 @@ export default async function IndustryPage({ params }: PageProps<'/industries/[s
           </div>
 
           <div className="mt-16 flex flex-col items-start justify-between gap-6 border-t border-[var(--border)] pt-8 md:flex-row md:items-center">
-            <p className="max-w-2xl text-base leading-7 text-[var(--text-muted)]">Our approach combines process discovery, stakeholder workshops, requirements analysis, security and compliance assessment, and system architecture.</p>
+            <p className="max-w-2xl text-base leading-7 text-[var(--text-secondary)]">Our approach combines process discovery, stakeholder workshops, requirements analysis, security and compliance assessment, and system architecture.</p>
             <Link href="/contact" className="button button-primary shrink-0">Discuss Your Environment <span aria-hidden="true">→</span></Link>
           </div>
         </SectionContainer>
@@ -59,11 +59,11 @@ export default async function IndustryPage({ params }: PageProps<'/industries/[s
 function DetailBlock({ number, title, items, note, accent = false }: { number: string; title: string; items: string[]; note?: string; accent?: boolean }) {
   return (
     <article className="sabi-card">
-      <p className="text-xs font-bold tracking-[0.16em] text-[var(--accent-start)]">{number}</p>
-      <h3 className="mt-5 text-2xl font-bold tracking-[-0.03em] text-white">{title}</h3>
-      {note ? <p className="mt-4 text-sm leading-6 text-[var(--text-muted)]">{note}</p> : null}
+      <p className="text-xs font-bold tracking-[0.16em] text-[var(--accent)]">{number}</p>
+      <h3 className="mt-5 text-2xl font-bold tracking-[-0.03em] text-[var(--text-primary)]">{title}</h3>
+      {note ? <p className="mt-4 text-sm leading-6 text-[var(--text-secondary)]">{note}</p> : null}
       <ul className="mt-6 grid gap-3">
-        {items.map((item) => <li key={item} className={`flex gap-3 text-[15px] leading-6 ${accent ? 'text-slate-200' : 'text-[var(--text-muted)]'}`}><span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent-start)]" />{item}</li>)}
+        {items.map((item) => <li key={item} className={`flex gap-3 text-[15px] leading-6 ${accent ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}><span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" />{item}</li>)}
       </ul>
     </article>
   );

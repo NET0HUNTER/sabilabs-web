@@ -2,9 +2,9 @@
 
 import { createContext, useCallback, useContext, useSyncExternalStore } from 'react';
 
-export type Theme = 'blue' | 'gold' | 'green';
+export type Theme = 'white' | 'blue' | 'green';
 
-export const themes: Theme[] = ['blue', 'gold', 'green'];
+export const themes: Theme[] = ['white', 'blue', 'green'];
 export const THEME_STORAGE_KEY = 'sabilabs-theme';
 
 interface ThemeContextType {
@@ -14,7 +14,7 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 const themeListeners = new Set<() => void>();
-let currentTheme: Theme = 'blue';
+let currentTheme: Theme = 'white';
 
 function subscribeToTheme(listener: () => void) {
   themeListeners.add(listener);
@@ -28,7 +28,7 @@ function getThemeSnapshot(): Theme {
 }
 
 function getServerThemeSnapshot(): Theme {
-  return 'blue';
+  return 'white';
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {

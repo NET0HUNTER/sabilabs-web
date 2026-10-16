@@ -11,10 +11,10 @@ export default function PrivacyPage() {
           <div className="max-w-3xl">
             <Eyebrow>Legal</Eyebrow>
             <SectionHeading>Privacy Policy</SectionHeading>
-            <div className="mt-10 space-y-6 text-base leading-8 text-[var(--text-muted)]">
+            <div className="mt-10 space-y-6 text-base leading-8 text-[var(--text-secondary)]">
               <p>SabiLabs uses information submitted through this website only to respond to enquiries, understand project requirements, and provide requested services.</p>
               <p>We do not sell personal information. Contact details are retained only for legitimate business communication and are handled in line with applicable data protection requirements.</p>
-              <p>For privacy questions or data requests, email <a className="text-[var(--accent-start)]" href="mailto:info@sabilabs.co.ke">info@sabilabs.co.ke</a>.</p>
+              <p>For privacy questions or data requests, email <a className="text-[var(--accent)]" href="mailto:info@sabilabs.co.ke">info@sabilabs.co.ke</a>.</p>
             </div>
           </div>
         </SectionContainer>
