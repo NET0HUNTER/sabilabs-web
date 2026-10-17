@@ -4,11 +4,13 @@ import MissionSection from '@/components/ui/MissionSection';
 import TeamSection from '@/components/ui/TeamSection';
 import WhyUsSection from '@/components/ui/WhyUsSection';
 import { PageMain, SectionContainer, SectionIntro } from '@/components/ui/Primitives';
+import { createPageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'About | SabiLabs',
-  description: 'Learn about the SabiLabs mission, values, multidisciplinary specialists, and long-term partnership philosophy.',
-};
+export const metadata: Metadata = createPageMetadata({
+  title: 'About Sabi Labs | Business Technology & Intelligence',
+  description: 'Learn about Sabi Labs Limited, our mission, values, multidisciplinary expertise, and approach to designing secure digital systems around real organizational needs.',
+  path: '/about',
+});
 
 export default function AboutPage() {
   return (
@@ -16,6 +18,7 @@ export default function AboutPage() {
       <section className="section-shell about-hero">
         <SectionContainer>
           <SectionIntro
+            headingLevel="h1"
             className="about-hero__intro !mb-0"
             headingClassName="about-hero__heading"
             descriptionClassName="about-hero__description"

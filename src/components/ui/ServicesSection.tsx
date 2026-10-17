@@ -9,6 +9,7 @@ export default function ServicesSection({ preview = false }: { preview?: boolean
     <section id="capabilities" className={`section-shell overflow-hidden ${preview ? 'home-section' : ''}`}>
       <SectionContainer>
         <SectionIntro
+          headingLevel={preview ? 'h2' : 'h1'}
           eyebrow={preview ? 'What We Do' : 'Business Capabilities'}
           heading={preview ? 'Technology That Starts With the Business.' : 'From Operational Reality to Working Digital Systems.'}
           description={preview

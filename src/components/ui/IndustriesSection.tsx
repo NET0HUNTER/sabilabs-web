@@ -10,6 +10,7 @@ export default function IndustriesSection({ preview = false }: { preview?: boole
     <section id="industries" className={`section-shell border-y border-[var(--border)] ${preview ? 'home-section' : ''}`}>
       <SectionContainer>
         <SectionIntro
+          headingLevel={preview ? 'h2' : 'h1'}
           eyebrow={preview ? 'Who We Work With' : 'Industries'}
           heading={preview ? 'Different Organizations. Different Operational Realities.' : 'Built Around How Your Organization Works.'}
           description={preview

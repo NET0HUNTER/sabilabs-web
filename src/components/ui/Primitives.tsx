@@ -12,22 +12,24 @@ export function Eyebrow({ children, className = '' }: { children: ReactNode; cla
   return <p className={`eyebrow ${className}`}>{children}</p>;
 }
 
-export function SectionHeading({ children, className = '' }: { children: ReactNode; className?: string }) {
-  return <h2 className={`section-heading ${className}`}>{children}</h2>;
+export function SectionHeading({ children, className = '', level = 'h2' }: { children: ReactNode; className?: string; level?: 'h1' | 'h2' }) {
+  const Heading = level;
+  return <Heading className={`section-heading ${className}`}>{children}</Heading>;
 }
 
-export function SectionIntro({ eyebrow, heading, description, className = '', headingClassName = '', descriptionClassName = '' }: {
+export function SectionIntro({ eyebrow, heading, description, className = '', headingClassName = '', descriptionClassName = '', headingLevel = 'h2' }: {
   eyebrow: ReactNode;
   heading: ReactNode;
   description?: ReactNode;
   className?: string;
   headingClassName?: string;
   descriptionClassName?: string;
+  headingLevel?: 'h1' | 'h2';
 }) {
   return (
     <div className={`section-intro centered ${className}`}>
       <Eyebrow>{eyebrow}</Eyebrow>
-      <SectionHeading className={headingClassName}>{heading}</SectionHeading>
+      <SectionHeading className={headingClassName} level={headingLevel}>{heading}</SectionHeading>
       {description ? <p className={`section-copy mx-auto ${descriptionClassName}`}>{description}</p> : null}
     </div>
   );

@@ -1,7 +1,12 @@
 import type { Metadata } from 'next';
 import { Eyebrow, PageMain, SectionContainer, SectionHeading } from '@/components/ui/Primitives';
+import { createPageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = { title: 'Privacy Policy | SabiLabs' };
+export const metadata: Metadata = createPageMetadata({
+  title: 'Privacy Policy | Sabi Labs',
+  description: 'Read how Sabi Labs Limited handles information submitted through this website and responds to privacy questions and data requests.',
+  path: '/privacy',
+});
 
 export default function PrivacyPage() {
   return (
@@ -10,7 +15,7 @@ export default function PrivacyPage() {
         <SectionContainer>
           <div className="max-w-3xl">
             <Eyebrow>Legal</Eyebrow>
-            <SectionHeading>Privacy Policy</SectionHeading>
+            <SectionHeading level="h1">Privacy Policy</SectionHeading>
             <div className="mt-10 space-y-6 text-base leading-8 text-[var(--text-secondary)]">
               <p>SabiLabs uses information submitted through this website only to respond to enquiries, understand project requirements, and provide requested services.</p>
               <p>We do not sell personal information. Contact details are retained only for legitimate business communication and are handled in line with applicable data protection requirements.</p>
