@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { caseStudies, getCaseStudy } from '@/lib/siteContent';
 import { Eyebrow, PageMain, SectionContainer } from '@/components/ui/Primitives';
+import { createPageMetadata, safeJsonLd, SITE_URL } from '@/lib/seo';
 
 export function generateStaticParams() {
   return caseStudies.map(({ slug }) => ({ slug }));
@@ -10,15 +11,30 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<'/case-studies/[slug]'>): Promise<Metadata> {
   const study = getCaseStudy((await params).slug);
-  return study ? { title: `${study.title} | SabiLabs Case Study`, description: study.challenge } : {};
+  return study ? createPageMetadata({
+    title: `${study.title} Case Study | Sabi Labs`,
+    description: study.challenge,
+    path: `/case-studies/${study.slug}`,
+  }) : {};
 }
 
 export default async function CaseStudyPage({ params }: PageProps<'/case-studies/[slug]'>) {
   const study = getCaseStudy((await params).slug);
   if (!study) notFound();
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Case Studies', item: `${SITE_URL}/case-studies` },
+      { '@type': 'ListItem', position: 3, name: study.title, item: `${SITE_URL}/case-studies/${study.slug}` },
+    ],
+  };
+
   return (
     <PageMain>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       <article>
         <header className="section-shell">
           <SectionContainer>

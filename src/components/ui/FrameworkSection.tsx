@@ -40,7 +40,11 @@ export default function FrameworkSection({ preview = false }: { preview?: boolea
       <SectionContainer>
         <header className="section-intro centered !mb-16 md:!mb-20">
           <Eyebrow className="mb-5 font-semibold">Our Approach</Eyebrow>
-          <h2 className="editorial-heading uppercase">Understand First. Engineer With Purpose.</h2>
+          {preview ? (
+            <h2 className="editorial-heading uppercase">Understand First. Engineer With Purpose.</h2>
+          ) : (
+            <h1 className="editorial-heading uppercase">Understand First. Engineer With Purpose.</h1>
+          )}
           <p className="editorial-copy mx-auto">Six connected steps keep each engagement grounded in organizational needs, secure execution, and useful outcomes.</p>
         </header>
 

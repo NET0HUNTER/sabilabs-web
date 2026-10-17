@@ -48,6 +48,7 @@ export default function ContactSection() {
     <section id="contact" className="section-shell border-t border-[var(--border)]">
       <SectionContainer>
         <SectionIntro
+          headingLevel="h1"
           eyebrow="Let's Talk"
           heading="Start With a Conversation."
           description={<>No sales pitch. Just a focused discussion about your business challenge and whether we&apos;re the right partner to solve it.</>}

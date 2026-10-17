@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { PageMain, SectionContainer, SectionIntro } from '@/components/ui/Primitives';
+import { createPageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Products | SabiLabs',
-  description: 'Information about reusable products and platforms owned and offered by SabiLabs.',
-};
+export const metadata: Metadata = createPageMetadata({
+  title: 'Products | Sabi Labs',
+  description: 'View information about reusable business technology products and platforms owned and offered by Sabi Labs.',
+  path: '/products',
+});
 
 export default function ProductsPage() {
   return (
@@ -13,6 +15,7 @@ export default function ProductsPage() {
       <section className="section-shell">
         <SectionContainer>
           <SectionIntro
+            headingLevel="h1"
             eyebrow="SabiLabs Products"
             heading="A Deliberately Small Product Catalogue."
             description="Client systems are not automatically SabiLabs products. Our primary work is designing technology around each organization’s requirements, and we only publish reusable platforms here when they are genuinely owned and offered by SabiLabs."

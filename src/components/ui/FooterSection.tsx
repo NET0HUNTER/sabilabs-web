@@ -22,7 +22,7 @@ export default function FooterSection() {
               aria-label="SabiLabs home"
               className="inline-flex"
             >
-              <Image src="/images/logo-wordmark-transparent.png" alt="SabiLabs" width={536} height={122} className="brand-logo-light nav-logo h-auto w-[min(68vw,240px)]" />
+              <Image src="/images/logo-wordmark-transparent.png" alt="Sabi Labs official logo" width={536} height={122} className="brand-logo-light nav-logo h-auto w-[min(68vw,240px)]" />
               <Image src="/images/logo-wordmark-blue-dark.png" alt="" width={536} height={122} className="brand-logo-dark nav-logo h-auto w-[min(68vw,240px)]" />
             </Link>
             <p className="mt-6 max-w-sm text-lg font-semibold leading-7 text-[var(--brand-shell-text)]">

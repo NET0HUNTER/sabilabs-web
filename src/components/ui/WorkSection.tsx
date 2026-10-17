@@ -9,6 +9,7 @@ export default function WorkSection({ preview = false }: { preview?: boolean }) 
     <section id="case-studies" className={`section-shell ${preview ? 'home-section' : ''}`}>
       <SectionContainer>
         <SectionIntro
+          headingLevel={preview ? 'h2' : 'h1'}
           eyebrow={preview ? 'Case Studies' : 'Client-Built Systems · Case Studies'}
           heading={<>Real Operations. Real Challenges. <span className="text-[var(--accent)]">Purpose-Built Systems.</span></>}
           description={preview

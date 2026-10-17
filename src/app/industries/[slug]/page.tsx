@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getIndustry, industries } from '@/lib/siteContent';
 import { Eyebrow, PageMain, SectionContainer } from '@/components/ui/Primitives';
+import { createPageMetadata, safeJsonLd, SITE_URL } from '@/lib/seo';
 
 export function generateStaticParams() {
   return industries.map(({ slug }) => ({ slug }));
@@ -10,15 +11,30 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<'/industries/[slug]'>): Promise<Metadata> {
   const industry = getIndustry((await params).slug);
-  return industry ? { title: `${industry.title} | SabiLabs`, description: industry.summary } : {};
+  return industry ? createPageMetadata({
+    title: `${industry.title} | Sabi Labs`,
+    description: industry.summary,
+    path: `/industries/${industry.slug}`,
+  }) : {};
 }
 
 export default async function IndustryPage({ params }: PageProps<'/industries/[slug]'>) {
   const industry = getIndustry((await params).slug);
   if (!industry) notFound();
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Industries', item: `${SITE_URL}/industries` },
+      { '@type': 'ListItem', position: 3, name: industry.title, item: `${SITE_URL}/industries/${industry.slug}` },
+    ],
+  };
+
   return (
     <PageMain>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       <section className="section-shell">
         <SectionContainer>
           <div className="mx-auto max-w-5xl text-center">

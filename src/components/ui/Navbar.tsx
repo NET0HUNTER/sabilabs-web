@@ -52,7 +52,7 @@ export default function Navbar() {
           >
             <Image
               src={theme === 'white' ? '/images/logo-wordmark-transparent.png' : '/images/logo-wordmark-blue-dark.png'}
-              alt="SabiLabs"
+              alt="Sabi Labs official logo"
               width={536}
               height={122}
               priority
